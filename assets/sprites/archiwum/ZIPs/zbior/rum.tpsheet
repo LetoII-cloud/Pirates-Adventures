@@ -1,0 +1,78 @@
+{
+	"textures": [
+		{
+			"image": "rum-0.png",
+			"size": {
+				"w": 160,
+				"h": 56
+			},
+			"sprites": [
+				{
+					"filename": "Icon48 - Copy (2).png",
+					"region": {
+						"x": 12,
+						"y": 12,
+						"w": 14,
+						"h": 32
+					},
+					"margin": {
+						"x": 1,
+						"y": 0,
+						"w": 2,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Icon48 - Copy (3).png",
+					"region": {
+						"x": 50,
+						"y": 12,
+						"w": 8,
+						"h": 32
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Icon48 - Copy.png",
+					"region": {
+						"x": 82,
+						"y": 12,
+						"w": 19,
+						"h": 32
+					},
+					"margin": {
+						"x": 3,
+						"y": 0,
+						"w": 5,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Icon48.png",
+					"region": {
+						"x": 125,
+						"y": 12,
+						"w": 23,
+						"h": 32
+					},
+					"margin": {
+						"x": 5,
+						"y": 0,
+						"w": 9,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:ddf0c7dc81750a1f7d8c6ccf8a98d92d:5281de32438b6de0e721fdcc870806bc:66547573203222098c772e96f1b55f27$"
+	}
+}

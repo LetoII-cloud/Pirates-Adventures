@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cnh0t8mssk18a"]
+
+[ext_resource type="Texture2D" uid="uid://bkvq86n8ip38n" path="res://assets/tiles/GRASS+.png" id="1_ba0x2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ba0x2"]
+size = Vector2(46, 10)
+
+[node name="Platform" type="AnimatableBody2D" unique_id=486547524]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2083657027]
+texture = ExtResource("1_ba0x2")
+region_enabled = true
+region_rect = Rect2(159.81955, 64.099594, 47.337265, 9.156448)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=247029594]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ba0x2")
+one_way_collision = true

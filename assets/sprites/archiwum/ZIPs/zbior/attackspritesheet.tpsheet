@@ -1,0 +1,63 @@
+{
+	"textures": [
+		{
+			"image": "attackspritesheet.png",
+			"size": {
+				"w": 256,
+				"h": 256
+			},
+			"sprites": [
+				{
+					"filename": "frame_0_delay-0.2s.png",
+					"region": {
+						"x": 1,
+						"y": 1,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "frame_1_delay-0.2s.png",
+					"region": {
+						"x": 1,
+						"y": 71,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "frame_2_delay-0.2s.png",
+					"region": {
+						"x": 1,
+						"y": 141,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:fedc359b48bc430832512820d9a93114:a154e7af40bf4bd59c988420f482486a:0eda0f051de1a53f31363667c3fb324b$"
+	}
+}

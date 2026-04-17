@@ -1,0 +1,198 @@
+{
+	"textures": [
+		{
+			"image": "spritesheet.png",
+			"size": {
+				"w": 816,
+				"h": 68
+			},
+			"sprites": [
+				{
+					"filename": "idle0.png",
+					"region": {
+						"x": 0,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "idle1.png",
+					"region": {
+						"x": 68,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "idle2.png",
+					"region": {
+						"x": 136,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "idle3.png",
+					"region": {
+						"x": 204,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "idle4.png",
+					"region": {
+						"x": 272,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "idle5.png",
+					"region": {
+						"x": 340,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "idle6.png",
+					"region": {
+						"x": 408,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "idle7.png",
+					"region": {
+						"x": 476,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "run0.png",
+					"region": {
+						"x": 544,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "run1.png",
+					"region": {
+						"x": 612,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "run2.png",
+					"region": {
+						"x": 680,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "run3.png",
+					"region": {
+						"x": 748,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:743a0e0f833da5490cceb429b5011444:e9fb903190c69d2ab4cc9a136b69c8f8:1b6ff94623e0282c57e59f9e13c5e64b$"
+	}
+}
