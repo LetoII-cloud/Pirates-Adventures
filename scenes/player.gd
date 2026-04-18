@@ -10,6 +10,7 @@ var sword
 var is_attacking := false
 
 func _ready() -> void:
+	print ("Test")
 	sword = Equipment.StandardSword.new()
 	print("PLAYER READY")
 	animatedSprite.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
