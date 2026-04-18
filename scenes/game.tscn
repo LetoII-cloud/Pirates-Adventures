@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://c5nomj3yccogg" path="res://scenes/killzone.tscn" id="4_lbhrr"]
 [ext_resource type="Texture2D" uid="uid://balh4g3lrsqy1" path="res://assets/tiles/Nature Platformer Tileset [16x16][FREE] - RottingPixels/nature-paltformer-tileset-16x16.png" id="4_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://dxgopuc2yyltd" path="res://scenes/rum.tscn" id="5_iywne"]
+[ext_resource type="Script" uid="uid://bxjywpevldnqy" path="res://scripts/przeszkoda.gd" id="8_gee14"]
+[ext_resource type="PackedScene" uid="uid://ckufxhfyvvusn" path="res://scenes/Proba.tscn" id="9_vtaks"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lnu2h"]
 texture = ExtResource("2_yqjtg")
@@ -555,6 +557,9 @@ _data = {
 &"movePlatform": SubResource("Animation_iywne")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtaks"]
+size = Vector2(46.5, 38.125)
+
 [node name="Game" type="Node2D" unique_id=1898815277]
 
 [node name="Player" parent="." unique_id=2078947028 instance=ExtResource("1_uwrxv")]
@@ -597,6 +602,7 @@ position = Vector2(168, -2)
 position = Vector2(120, 38)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1262180194]
+visible = false
 
 [node name="Jump hint" type="Label" parent="CanvasLayer" unique_id=319187901]
 z_index = 1
@@ -605,3 +611,18 @@ offset_top = -64.0
 offset_right = 460.0
 offset_bottom = 11.0
 text = "Jump with W or Arrow Up"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1539861422]
+
+[node name="Proba" parent="." unique_id=945126120 groups=["hitboxes"] instance=ExtResource("9_vtaks")]
+script = ExtResource("8_gee14")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Proba" unique_id=1935580636 groups=["hitboxes"]]
+position = Vector2(73, 28.9375)
+shape = SubResource("RectangleShape2D_vtaks")
+debug_color = Color(0.89966697, 0.061123803, 0.7451031, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="Proba" unique_id=1719244619 groups=["hitboxes"]]
+position = Vector2(73, 26.000004)
+scale = Vector2(0.11500001, 0.19642861)
+texture = ExtResource("2_yqjtg")

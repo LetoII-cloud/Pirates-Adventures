@@ -1,5 +1,6 @@
 class_name Equipment extends Node
-
+	
+var standardSword
 var rums 	:= 0
 var bombs 	:= 0
 var coins	:= 0
@@ -8,6 +9,7 @@ var coins	:= 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	standardSword = StandardSword.new()
 	print("Equipment attached to the Player")
 	return
 
@@ -18,7 +20,14 @@ func addRum () -> void:
 	return
 	
 func useRum () -> void:
+	if (rums < 1):
+		return
+	else: 
+		rums -= 1
 	print ("Consuming 1 Rum.")
-	rums -= 1
 	print ("Rums:", rums)
 	playerStats.usedRum();
+
+class StandardSword extends Sprite2D :
+	
+	var dmg := 50

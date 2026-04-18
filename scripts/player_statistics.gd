@@ -1,9 +1,9 @@
 extends Node
 
-var health := 80
+var health := 60
 
 # TO-DO: move it to some configuration of collectibles. Possibly export?
-var rumHealthIncreaseValue := 20
+@export var rumHealthIncreaseValue := 20
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
