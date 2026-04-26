@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://ckufxhfyvvusn"]
+
+[ext_resource type="Texture2D" uid="uid://bkvq86n8ip38n" path="res://assets/tiles/GRASS+.png" id="1_pri82"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tm2cw"]
+size = Vector2(46.5, 38.125)
+
+[node name="Proba" type="Area2D" unique_id=945126120]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1454281525 groups=["hitboxes"]]
+position = Vector2(73, 28.9375)
+shape = SubResource("RectangleShape2D_tm2cw")
+debug_color = Color(0.89966697, 0.061123803, 0.7451031, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=149130815 groups=["hitboxes"]]
+position = Vector2(73, 26.000004)
+scale = Vector2(0.11500001, 0.19642861)
+texture = ExtResource("1_pri82")

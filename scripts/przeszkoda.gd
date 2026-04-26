@@ -14,7 +14,6 @@ func _process(delta: float) -> void:
 	
 func take_damage (dmg : int) -> void:
 	health = clamp (health-dmg, 0, 100)
-	print ('uderzenie!', health)
 	if health <= 0:
 			destroy()
 	return

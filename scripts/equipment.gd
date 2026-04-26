@@ -10,7 +10,6 @@ var coins	:= 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	standardSword = StandardSword.new()
-	print("Equipment attached to the Player")
 	return
 
 func addRum () -> void:
@@ -30,4 +29,4 @@ func useRum () -> void:
 
 class StandardSword extends Sprite2D :
 	
-	var dmg := 50
+	var dmg := 300

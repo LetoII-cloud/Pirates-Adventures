@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bp67w2f83i8se"
+path="res://.godot/imported/Alestorm The Quest - 8 Bit.mp3-ab4bf2abbe76c5180655cad3b76b37f7.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Alestorm The Quest - 8 Bit.mp3"
+dest_files=["res://.godot/imported/Alestorm The Quest - 8 Bit.mp3-ab4bf2abbe76c5180655cad3b76b37f7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,72 +1,51 @@
-extends CharacterBody2D
-
+class_name Player extends CharacterBody2D
 
 const SPEED = 200.0
 const JUMP_VELOCITY = -300.0
 
-@onready var animatedSprite = $AnimatedSprite2D
+@onready var animationPlayer := $AnimationPlayer
+@onready var animatedSprite = $PlayerSprite
+
+@onready var eq = $Equipment
+
+@onready var stateMachine = $StateMachine
+
+var sword
+
+var is_attacking := false
 
 func _ready() -> void:
-	print("PLAYER READY")
-
-# var rumBottles = 0;
+		
+	sword = Equipment.StandardSword.new()
+	
+	
+	
 
 func _physics_process(delta: float) -> void:
+	# move_and_slide()		
+#	if Input.is_action_just_pressed("attack_left") and not is_attacking:
+#		is_attacking = true
+#		#animatedSprite.play("attack_new")
+#		animationPlayer.play("attacktest")
+#
+#	if Input.is_action_just_pressed("use_rum"):
+#		get_node("Equipment").useRum()
+#
+#	if not is_attacking:
+#		update_animation(direction)
+#
+#	move_and_slide()
+	return
 
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+func set_facing (direction: int) -> void:
+	if direction < 0:
+		animatedSprite.scale.x = -1
+	elif direction > 0:
+		animatedSprite.scale.x = 1
 
-	if Input.is_action_just_pressed("attack_left"):
-		animatedSprite.play("attack_new")
 		
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		animatedSprite.play("jumping") # immediate feedback
-		
-	if Input.is_action_just_pressed("use_rum"):
-		get_node("Equipment").useRum()
-		
-	if Input.is_action_just_pressed("attack_left"):
-		animatedSprite.play("attack_new")
+# If you do not create a RESET track in your AnimationPlayer, you will get errors, including your Player sprite not starting in the correct position when you load the scene. 
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("move_left", "move_right")
-	
-	if direction > 0:
-		animatedSprite.flip_h = false
-	elif direction < 0:
-		animatedSprite.flip_h = true
-		
-		
-	# Play jump animation
-	if not is_on_floor():
-		if velocity.y < 0:
-			animatedSprite.play("jumping")
-		else:
-			animatedSprite.play("falling")
-	elif direction == 0:
-		animatedSprite.play("idle")
-	else:
-		animatedSprite.play("running")
-		
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+#To avoid problems, create another animation in AnimatedSprite2D called RESET (all caps) and use the FIRST idle down frame (frame 0) that you used for the idle down animation.
 
-	move_and_slide()
-
-
-#func _on_rum_body_entered(body: Node2D) -> void:
-#	rumBottles += 1
-#	print("rum bottles : ", rumBottles)
-
-
-#func _on_area_2d_body_entered(body: Node2D) -> void:
-#	if !body.is_in_group("rum"):
-#		return
-#	rumBottles += 1
-#	print("second approach - rum bottles : ", rumBottles)
+#Then in AnimationPlayer, create a RESET track and key the RESET frame from your AnimatedSprite2D.

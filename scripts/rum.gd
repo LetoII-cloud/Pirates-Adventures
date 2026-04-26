@@ -1,8 +1,8 @@
 extends Area2D
 
 func _ready() -> void:
-	print("rum instantiated")
-
+	pass
+	
 func _on_body_entered(body: Node2D) -> void:
 	if body is not CharacterBody2D:
 		return

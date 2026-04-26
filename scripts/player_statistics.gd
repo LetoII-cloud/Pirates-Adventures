@@ -1,13 +1,13 @@
-extends Node
+extends CharacterStatistics
 
-var health := 60
+const max_health = 60
 
 # TO-DO: move it to some configuration of collectibles. Possibly export?
 @export var rumHealthIncreaseValue := 20
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print ("Player statistics attached.")
+	health = max_health
 	pass # Replace with function body.
 
 

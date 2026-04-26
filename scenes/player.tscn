@@ -2,12 +2,19 @@
 
 [ext_resource type="Texture2D" uid="uid://caqe0c4cuk38c" path="res://assets/sprites/archiwum/ZIPs/zbior/spritesheet.png" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://c4fx6kxg4r1ps" path="res://assets/sprites/archiwum/ZIPs/zbior/newattackspritesheet.png" id="1_dqkch"]
-[ext_resource type="Script" uid="uid://daf2etllhse46" path="res://scenes/player.gd" id="1_tuyoq"]
+[ext_resource type="Script" uid="uid://daf2etllhse46" path="res://scripts/player.gd" id="1_tuyoq"]
+[ext_resource type="PackedScene" uid="uid://cs1yn1pr23dj" path="res://scenes/StateMachine.tscn" id="2_3v2ag"]
 [ext_resource type="Texture2D" uid="uid://7y7deiv1mqn" path="res://assets/sprites/player/spritesheet.png" id="2_smehm"]
 [ext_resource type="PackedScene" uid="uid://brfkh2yew0xqo" path="res://scenes/equipment.tscn" id="3_dqkch"]
+[ext_resource type="Script" uid="uid://bjoc0a27w4qqi" path="res://scripts/PlayerStates/Idle.gd" id="3_jej6c"]
 [ext_resource type="Texture2D" uid="uid://cyd716bur4cen" path="res://assets/sprites/player/jumping.png" id="3_qhqgy"]
+[ext_resource type="Script" uid="uid://web68j04wx1d" path="res://scripts/PlayerStates/Running.gd" id="4_s0fv1"]
+[ext_resource type="Script" uid="uid://bk6vsgvmrunle" path="res://scripts/PlayerStates/Jumping.gd" id="5_dhpf4"]
 [ext_resource type="PackedScene" uid="uid://oqiat7qy2vga" path="res://scenes/playerStatistics.tscn" id="6_fjrip"]
-[ext_resource type="Script" uid="uid://km81vtcke4tv" path="res://scripts/player_statistics.gd" id="7_smehm"]
+[ext_resource type="AudioStream" uid="uid://cngnbb6v2ha2r" path="res://assets/sounds/swingg.mp3" id="6_oprun"]
+[ext_resource type="Script" uid="uid://wqsyhd0g2c3c" path="res://scripts/PlayerStates/Attacking.gd" id="6_qmni7"]
+[ext_resource type="Script" uid="uid://4ihaea3xuqp" path="res://scripts/PlayerStates/Falling.gd" id="7_f1ej7"]
+[ext_resource type="Script" uid="uid://km81vtcke4tv" path="res://scripts/character_statistics.gd" id="7_smehm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4ail"]
 atlas = ExtResource("2_smehm")
@@ -142,7 +149,7 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 1.4,
 "texture": SubResource("AtlasTexture_60mlk")
 }, {
 "duration": 1.0,
@@ -196,7 +203,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/path = NodePath("PlayerSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -212,7 +219,7 @@ length = 0.33333334
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("PlayerSprite:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -224,7 +231,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/path = NodePath("PlayerSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -236,7 +243,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D/BasicAttackArea/BasicAttackCollision:disabled")
+tracks/2/path = NodePath("PlayerSprite/BasicAttackArea/BasicAttackCollision:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -256,16 +263,40 @@ _data = {
 collision_layer = 2
 script = ExtResource("1_tuyoq")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2068998176]
+[node name="StateMachine" parent="." unique_id=712696290 instance=ExtResource("2_3v2ag")]
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=598461992]
+script = ExtResource("3_jej6c")
+
+[node name="Running" type="Node" parent="StateMachine" unique_id=117163688]
+script = ExtResource("4_s0fv1")
+
+[node name="Attacking" type="Node" parent="StateMachine" unique_id=36845017]
+script = ExtResource("6_qmni7")
+
+[node name="SwingSFX" type="AudioStreamPlayer2D" parent="StateMachine/Attacking" unique_id=855549917]
+stream = ExtResource("6_oprun")
+
+[node name="Jumping" type="Node" parent="StateMachine" unique_id=1739598228]
+script = ExtResource("5_dhpf4")
+
+[node name="Falling" type="Node" parent="StateMachine" unique_id=2069931260]
+script = ExtResource("7_f1ej7")
+
+[node name="PlayerStatistics" parent="." unique_id=170912874 instance=ExtResource("6_fjrip")]
+script = ExtResource("7_smehm")
+
+[node name="Equipment" parent="." unique_id=1495815464 instance=ExtResource("3_dqkch")]
+
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=2068998176]
 z_index = 1
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_smehm")
 animation = &"attack_new"
-autoplay = "idle"
 
-[node name="BasicAttackArea" type="Area2D" parent="AnimatedSprite2D" unique_id=1671878146]
+[node name="BasicAttackArea" type="Area2D" parent="PlayerSprite" unique_id=1671878146]
 
-[node name="BasicAttackCollision" type="CollisionShape2D" parent="AnimatedSprite2D/BasicAttackArea" unique_id=482700656 groups=["hitboxes"]]
+[node name="BasicAttackCollision" type="CollisionShape2D" parent="PlayerSprite/BasicAttackArea" unique_id=482700656 groups=["hitboxes"]]
 position = Vector2(22, -1)
 shape = SubResource("RectangleShape2D_fjrip")
 disabled = true
@@ -274,14 +305,8 @@ disabled = true
 position = Vector2(0, 10)
 shape = SubResource("CircleShape2D_3vyb7")
 
-[node name="Equipment" parent="." unique_id=1495815464 instance=ExtResource("3_dqkch")]
-
-[node name="PlayerStatistics" parent="." unique_id=170912874 instance=ExtResource("6_fjrip")]
-script = ExtResource("7_smehm")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1228622459]
 libraries/ = SubResource("AnimationLibrary_l71n6")
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="area_entered" from="AnimatedSprite2D/BasicAttackArea" to="." method="_on_basic_attack_area_area_entered"]
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="PlayerSprite" to="StateMachine/Attacking" method="_on_player_sprite_animation_finished"]
+[connection signal="area_entered" from="PlayerSprite/BasicAttackArea" to="StateMachine/Attacking" method="_on_basic_attack_area_area_entered"]
