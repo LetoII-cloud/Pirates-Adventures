@@ -36,9 +36,9 @@ func handle_movement (direction: int, currentSpeed: float) -> void:
 func handle_movement_with_direction_flag (direction: int, currentSpeed: float, turnAroundFlag: bool) -> void:
 	enemy.velocity.x = direction * currentSpeed
 	if turnAroundFlag:
-		if direction > 0:
-			enemy.animatedSprite.flip_h = false
-		elif direction < 0:
-			enemy.animatedSprite.flip_h = true
-		
+		#if direction > 0:
+		#	enemy.animatedSprite.flip_h = false
+		#elif direction < 0:
+		#	enemy.animatedSprite.flip_h = true
+		enemy.set_facing(direction)
 	enemy.move_and_slide()

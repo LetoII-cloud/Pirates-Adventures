@@ -29,4 +29,4 @@ func useRum () -> void:
 
 class StandardSword extends Sprite2D :
 	
-	var dmg := 300
+	var dmg := 30

@@ -11,7 +11,7 @@ func handle_physics (delta : float) -> void:
 
 	if not enemy.is_on_floor():
 		enemy.velocity += enemy.get_gravity() * delta
-		
+	
 	enemy.move_and_slide()
 		
 	if enemy.is_on_floor():

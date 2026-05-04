@@ -38,8 +38,7 @@ func change_state (newState : String):
 	if lock_transistions:
 		print ("Transition locked.")
 		return
-	if newState.contains("Enemy"):
-		print("NEW STATE: ", newState)
+	
 	if currentState:
 		currentState.exit()
 		

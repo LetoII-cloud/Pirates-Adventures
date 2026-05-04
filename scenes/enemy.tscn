@@ -454,9 +454,6 @@ script = ExtResource("12_wtq4b")
 [node name="EnemyHurt" type="Node" parent="StateMachine" unique_id=1146151897]
 script = ExtResource("16_shcg2")
 
-[node name="HurtSFX" type="AudioStreamPlayer2D" parent="StateMachine/EnemyHurt" unique_id=1751722221]
-stream = ExtResource("17_1x4g4")
-
 [node name="EnemyDying" type="Node" parent="StateMachine" unique_id=1669184687]
 script = ExtResource("17_ile5s")
 
@@ -464,9 +461,10 @@ script = ExtResource("17_ile5s")
 wait_time = 5.0
 one_shot = true
 
-[node name="CharacterStatistics" type="Node" parent="." unique_id=1563059332]
+[node name="EnemyStatistics" type="Node" parent="." unique_id=1563059332]
 script = ExtResource("10_8qclf")
-health = 8000
+attack_strength = 40
+health = 100
 metadata/_custom_type_script = "uid://km81vtcke4tv"
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1341160616]
@@ -494,9 +492,13 @@ position = Vector2(0, 10.45)
 target_position = Vector2(100, 0)
 collision_mask = 2
 
+[node name="HurtSFX" type="AudioStreamPlayer2D" parent="." unique_id=1280559399]
+stream = ExtResource("17_1x4g4")
+
 [connection signal="damage_info" from="Hurtbox" to="." method="_on_hurtbox_damage_info"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/EnemyHurt" method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="AnimatedSprite2D/AttackArea" to="StateMachine/EnemyAttacking" method="_on_attack_area_area_entered"]
 [connection signal="hurt_finished" from="StateMachine/EnemyHurt" to="StateMachine" method="_on_enemy_hurt_hurt_finished"]
 [connection signal="take_collision_away" from="StateMachine/EnemyDying" to="." method="_on_enemy_dying_take_collision_away"]
 [connection signal="timeout" from="StateMachine/EnemyDying/Timer" to="StateMachine/EnemyDying" method="_on_timer_timeout"]

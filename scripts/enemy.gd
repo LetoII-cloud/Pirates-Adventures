@@ -12,7 +12,9 @@ const SPEED = 50
 @onready var animationPlayer = $AnimationPlayer	
 @onready var stateMachine = $StateMachine
 
-@onready var enemyStatistics = $CharacterStatistics
+@onready var enemyStatistics = $EnemyStatistics
+
+@onready var hurt_sfx = $HurtSFX
 
 func _ready() -> void:
 	
@@ -22,15 +24,26 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	
 	return
+	
+
+func set_facing (direction: int) -> void:
+	if direction < 0:
+		animatedSprite.scale.x = -1
+	elif direction > 0:
+		animatedSprite.scale.x = 1
+
 
 func take_damage (dmg: float) -> void:
 	var enemyHealth = enemyStatistics.take_damage(dmg)
-	if enemyStatistics.health < 0:
-		stateMachine.change_state(EnemyState.ENEMYDYING)
-	else:
-		if stateMachine.currentState.name != EnemyState.ENEMYHURT:
+	hurt_sfx.play()
+
+	if stateMachine.currentState.name != EnemyState.ENEMYHURT and enemyStatistics.health > 0:
 			stateMachine.change_state(EnemyState.ENEMYHURT)
 			stateMachine.lock_transistions = true
+			
+	if enemyStatistics.health <= 0:
+		stateMachine.change_state(EnemyState.ENEMYDYING)
+		
 	return
 
 

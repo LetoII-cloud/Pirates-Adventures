@@ -5,10 +5,11 @@ const JUMP_VELOCITY = -300.0
 
 @onready var animationPlayer := $AnimationPlayer
 @onready var animatedSprite = $PlayerSprite
-
+@onready var playerStatistics = $PlayerStatistics
 @onready var eq = $Equipment
 
 @onready var stateMachine = $StateMachine
+@onready var hurt_sfx = $HurtSFX
 
 var sword
 
@@ -49,3 +50,20 @@ func set_facing (direction: int) -> void:
 #To avoid problems, create another animation in AnimatedSprite2D called RESET (all caps) and use the FIRST idle down frame (frame 0) that you used for the idle down animation.
 
 #Then in AnimationPlayer, create a RESET track and key the RESET frame from your AnimatedSprite2D.
+
+func _on_hurtbox_damage_info(dmg: int) -> void:
+	take_damage (dmg)
+
+func take_damage (dmg: float) -> void:
+	var health = playerStatistics.take_damage(dmg)
+	hurt_sfx.play()
+	
+	if stateMachine.currentState.name != PlayerState.HURT and playerStatistics.health > 0:
+			stateMachine.change_state(PlayerState.HURT)
+			#stateMachine.lock_transistions = true
+			
+	if playerStatistics.health <= 0:
+		stateMachine.change_state(PlayerState.DYING)
+		stateMachine.lock_transistions = true
+		
+	return
