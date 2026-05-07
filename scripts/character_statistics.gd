@@ -1,8 +1,21 @@
 class_name CharacterStatistics extends Node
 
-@export var health : int
+@export var health : int:
+	set(value):
+		health = value
+		health_changed.emit(health)
 
 func take_damage (dmg : float) -> float:
-	health = health-dmg
-	print (health)
+	health = clamp(health-dmg, 0, 100)
 	return health
+
+func usedRum () -> bool:
+	if health == 100:
+		return false
+	health = clamp(health + 20, 0, 100)
+	print(health)
+	print('----')
+	return true
+	
+
+signal health_changed (new_health : int)

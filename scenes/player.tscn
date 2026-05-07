@@ -372,6 +372,8 @@ _data = {
 [node name="Player" type="CharacterBody2D" unique_id=2078947028]
 collision_layer = 2
 script = ExtResource("1_tuyoq")
+SPEED = 200.0
+JUMP_VELOCITY = -300.0
 
 [node name="StateMachine" parent="." unique_id=712696290 instance=ExtResource("2_3v2ag")]
 
@@ -440,6 +442,8 @@ libraries/ = SubResource("AnimationLibrary_l71n6")
 stream = ExtResource("21_i4ail")
 
 [connection signal="timeout" from="StateMachine/Dying/Timer" to="StateMachine/Dying" method="_on_timer_timeout"]
+[connection signal="health_changed" from="PlayerStatistics" to="." method="_on_player_statistics_health_changed"]
+[connection signal="ammo_amount_change" from="Equipment" to="." method="_on_equipment_ammo_amount_change"]
 [connection signal="animation_finished" from="PlayerSprite" to="StateMachine/Attacking" method="_on_player_sprite_animation_finished"]
 [connection signal="area_entered" from="PlayerSprite/BasicAttackArea" to="StateMachine/Attacking" method="_on_basic_attack_area_area_entered"]
 [connection signal="damage_info" from="Hurtbox" to="." method="_on_hurtbox_damage_info"]

@@ -1,7 +1,7 @@
 class_name Player extends CharacterBody2D
 
-const SPEED = 200.0
-const JUMP_VELOCITY = -300.0
+@export var SPEED : float # originally 200
+@export var JUMP_VELOCITY : float # originally -300
 
 @onready var animationPlayer := $AnimationPlayer
 @onready var animatedSprite = $PlayerSprite
@@ -11,12 +11,14 @@ const JUMP_VELOCITY = -300.0
 @onready var stateMachine = $StateMachine
 @onready var hurt_sfx = $HurtSFX
 
+var direction : int
+
+
 var sword
 
 var is_attacking := false
 
 func _ready() -> void:
-		
 	sword = Equipment.StandardSword.new()
 	
 	
@@ -36,9 +38,16 @@ func _physics_process(delta: float) -> void:
 #		update_animation(direction)
 #
 #	move_and_slide()
+
+	if playerStatistics.health > 0:
+		# should I define it here or on player.gd level?
+		if Input.is_action_just_pressed("shoot"):
+			shoot()
+
 	return
 
 func set_facing (direction: int) -> void:
+	self.direction = self.direction if direction == 0 else direction # don't change if param=0
 	if direction < 0:
 		animatedSprite.scale.x = -1
 	elif direction > 0:
@@ -63,7 +72,31 @@ func take_damage (dmg: float) -> void:
 			#stateMachine.lock_transistions = true
 			
 	if playerStatistics.health <= 0:
-		stateMachine.change_state(PlayerState.DYING)
-		stateMachine.lock_transistions = true
+		die()
+
+signal notify_ui (new_health : int)
+
+func _on_player_statistics_health_changed(new_health: int) -> void:
+	notify_ui.emit("health", new_health)
+
+func die () -> void:
+	stateMachine.change_state(PlayerState.DYING)
+	stateMachine.lock_transistions = true
+	eq.queue_free()
 		
-	return
+
+
+func _on_equipment_ammo_amount_change(new_amount: int) -> void:
+	notify_ui.emit("ammo", new_amount)
+	
+func shoot () -> void:
+	if eq.ammo > 0:
+		eq.ammo = eq.ammo-1
+		spawn_projectile ()
+	else:
+		print("No ammo.")
+		
+func spawn_projectile() -> void:
+	spawn_projectile_call.emit()
+
+signal spawn_projectile_call ()

@@ -1,16 +1,30 @@
 class_name Equipment extends Node
 	
 var standardSword
-var rums 	:= 0
-var bombs 	:= 0
-var coins	:= 0
+var pistol
+@export var rums 	:= 0
+@export var bombs 	:= 0
+@export var coins	:= 0
+@export var initial_ammo := 5
+@export var ammo : int:
+	set(value):      
+		ammo = value
+		ammo_amount_change.emit(value)
 
 @onready var playerStats = $"../PlayerStatistics"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	standardSword = StandardSword.new()
+	pistol = StandardPistol.new()
 	return
+	
+func _physics_process(delta: float) -> void:
+	# should I define it here or on player.gd level?
+	if Input.is_action_just_pressed("use_rum"):
+		useRum()
+		
+	
 
 func addRum () -> void:
 	print ("Adding 1 Rum to the Equipment.")
@@ -21,12 +35,20 @@ func addRum () -> void:
 func useRum () -> void:
 	if (rums < 1):
 		return
-	else: 
+	elif playerStats.usedRum():
 		rums -= 1
-	print ("Consuming 1 Rum.")
-	print ("Rums:", rums)
-	playerStats.usedRum();
+		print ("Consuming 1 Rum.")
+		print ("Rums:", rums)
+
+	
+
+signal ammo_amount_change (new_amount : int)
 
 class StandardSword extends Sprite2D :
 	
 	var dmg := 30
+	
+	
+class StandardPistol extends Sprite2D :
+	
+	var dmg = 100

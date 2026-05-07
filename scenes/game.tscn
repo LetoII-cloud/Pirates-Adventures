@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dwg6t7g5jkwl6"]
 
+[ext_resource type="Script" uid="uid://d0kkkflah2ht" path="res://scripts/game.gd" id="1_dinhu"]
 [ext_resource type="PackedScene" uid="uid://cap7ya5jxmjxa" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://bkvq86n8ip38n" path="res://assets/tiles/GRASS+.png" id="2_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://cnh0t8mssk18a" path="res://scenes/platform.tscn" id="3_lnu2h"]
@@ -517,6 +518,7 @@ texture = ExtResource("4_u5sy4")
 
 [sub_resource type="TileSet" id="TileSet_lbhrr"]
 physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 103
 sources/0 = SubResource("TileSetAtlasSource_lnu2h")
 sources/1 = SubResource("TileSetAtlasSource_u5sy4")
 sources/2 = SubResource("TileSetAtlasSource_gee14")
@@ -560,8 +562,10 @@ _data = {
 }
 
 [node name="Game" type="Node2D" unique_id=1898815277]
+script = ExtResource("1_dinhu")
 
 [node name="Player" parent="." unique_id=2078947028 instance=ExtResource("1_uwrxv")]
+position = Vector2(-62, 6)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1148561788]
 zoom = Vector2(1.835, 1.835)
@@ -610,3 +614,22 @@ position = Vector2(446, 12)
 stream = ExtResource("11_kvpfn")
 autoplay = true
 bus = &"Music"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1313932571]
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer" unique_id=104419738]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 180.0
+offset_bottom = 43.0
+text = "Health: <health>"
+
+[node name="AmmoLabel" type="Label" parent="CanvasLayer" unique_id=1814723721]
+offset_left = 20.0
+offset_top = 38.0
+offset_right = 148.0
+offset_bottom = 61.0
+text = "Ammo: <ammo>"
+
+[connection signal="notify_ui" from="Player" to="." method="_on_player_notify_ui"]
+[connection signal="spawn_projectile_call" from="Player" to="." method="_on_player_spawn_projectile_call"]

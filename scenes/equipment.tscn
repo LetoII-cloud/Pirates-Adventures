@@ -4,3 +4,4 @@
 
 [node name="Equipment" type="Node" unique_id=1495815464]
 script = ExtResource("1_dusko")
+ammo = 5
