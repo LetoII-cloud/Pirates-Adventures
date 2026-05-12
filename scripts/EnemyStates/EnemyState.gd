@@ -42,3 +42,6 @@ func handle_movement_with_direction_flag (direction: int, currentSpeed: float, t
 		#	enemy.animatedSprite.flip_h = true
 		enemy.set_facing(direction)
 	enemy.move_and_slide()
+	
+	if not enemy.is_on_floor():
+		finished.emit(FALLING)

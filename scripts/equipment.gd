@@ -1,7 +1,7 @@
 class_name Equipment extends Node
 	
 var standardSword
-var pistol
+
 @export var rums 	:= 0
 @export var bombs 	:= 0
 @export var coins	:= 0
@@ -12,11 +12,11 @@ var pistol
 		ammo_amount_change.emit(value)
 
 @onready var playerStats = $"../PlayerStatistics"
+@onready var standard_gun = $StandardGun
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	standardSword = StandardSword.new()
-	pistol = StandardPistol.new()
 	return
 	
 func _physics_process(delta: float) -> void:
@@ -47,8 +47,3 @@ signal ammo_amount_change (new_amount : int)
 class StandardSword extends Sprite2D :
 	
 	var dmg := 30
-	
-	
-class StandardPistol extends Sprite2D :
-	
-	var dmg = 100

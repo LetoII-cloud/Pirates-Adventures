@@ -7,6 +7,7 @@ const FALLING = "Falling"
 const ATTACKING = "Attacking"
 const HURT = "Hurt"
 const DYING = "Dying"
+const AIMING = "Aiming"
 
 var player: Player
 

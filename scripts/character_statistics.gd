@@ -1,5 +1,8 @@
 class_name CharacterStatistics extends Node
 
+# TO-DO: move it to some configuration of collectibles. Possibly export?
+@export var rumHealthIncreaseValue : int
+
 @export var health : int:
 	set(value):
 		health = value
@@ -12,7 +15,7 @@ func take_damage (dmg : float) -> float:
 func usedRum () -> bool:
 	if health == 100:
 		return false
-	health = clamp(health + 20, 0, 100)
+	health = clamp(health + rumHealthIncreaseValue, 0, 100)
 	print(health)
 	print('----')
 	return true

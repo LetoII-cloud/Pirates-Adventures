@@ -6,10 +6,11 @@ class_name Player extends CharacterBody2D
 @onready var animationPlayer := $AnimationPlayer
 @onready var animatedSprite = $PlayerSprite
 @onready var playerStatistics = $PlayerStatistics
-@onready var eq = $Equipment
+@onready var equipment = $Equipment
 
 @onready var stateMachine = $StateMachine
 @onready var hurt_sfx = $HurtSFX
+@onready var aiming = $Aiming
 
 var direction : int
 
@@ -20,10 +21,14 @@ var is_attacking := false
 
 func _ready() -> void:
 	sword = Equipment.StandardSword.new()
-	
-	
-	
 
+
+func _unhandled_input(event: InputEvent) -> void:
+	print (aiming.is_aiming)
+	if playerStatistics.health > 0 and event.is_action_pressed("attack_left") and aiming.is_aiming:
+		shoot(aiming.direction)
+		get_viewport().set_input_as_handled()
+	
 func _physics_process(delta: float) -> void:
 	# move_and_slide()		
 #	if Input.is_action_just_pressed("attack_left") and not is_attacking:
@@ -38,11 +43,6 @@ func _physics_process(delta: float) -> void:
 #		update_animation(direction)
 #
 #	move_and_slide()
-
-	if playerStatistics.health > 0:
-		# should I define it here or on player.gd level?
-		if Input.is_action_just_pressed("shoot"):
-			shoot()
 
 	return
 
@@ -64,6 +64,7 @@ func _on_hurtbox_damage_info(dmg: int) -> void:
 	take_damage (dmg)
 
 func take_damage (dmg: float) -> void:
+	print('taking dmg')
 	var health = playerStatistics.take_damage(dmg)
 	hurt_sfx.play()
 	
@@ -82,21 +83,17 @@ func _on_player_statistics_health_changed(new_health: int) -> void:
 func die () -> void:
 	stateMachine.change_state(PlayerState.DYING)
 	stateMachine.lock_transistions = true
-	eq.queue_free()
+	equipment.queue_free()
 		
 
 
 func _on_equipment_ammo_amount_change(new_amount: int) -> void:
 	notify_ui.emit("ammo", new_amount)
 	
-func shoot () -> void:
-	if eq.ammo > 0:
-		eq.ammo = eq.ammo-1
-		spawn_projectile ()
+func shoot (target_position: Vector2) -> void:
+	if equipment.ammo > 0:
+		equipment.ammo = equipment.ammo-1
+		equipment.standard_gun.shoot (global_position, target_position)
 	else:
 		print("No ammo.")
 		
-func spawn_projectile() -> void:
-	spawn_projectile_call.emit()
-
-signal spawn_projectile_call ()

@@ -17,10 +17,14 @@
 [ext_resource type="Script" uid="uid://km81vtcke4tv" path="res://scripts/character_statistics.gd" id="7_smehm"]
 [ext_resource type="Script" uid="uid://urxsk4u55bun" path="res://scenes/hurt.gd" id="9_fulsm"]
 [ext_resource type="Script" uid="uid://cifwpepmstkk0" path="res://scenes/dying.gd" id="10_4r5pv"]
+[ext_resource type="Script" uid="uid://c6u2yk6ea11dn" path="res://scripts/aiming.gd" id="11_4ni07"]
+[ext_resource type="Script" uid="uid://cu0dybpacktyb" path="res://scripts/standard_gun.gd" id="14_a38lo"]
+[ext_resource type="PackedScene" uid="uid://bykh60wljrc2w" path="res://scenes/bullet.tscn" id="15_ke2ow"]
 [ext_resource type="Texture2D" uid="uid://kkpxkqh14n7x" path="res://assets/sprites/archiwum/ZIPs/zbior/player death south spritesheet.png" id="16_60mlk"]
 [ext_resource type="Script" uid="uid://byjdxbm8xq13h" path="res://scenes/player_hurtbox.gd" id="16_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://bne7755aap1br" path="res://assets/sprites/archiwum/ZIPs/zbior/player hit spritesheeet.png" id="17_4r5pv"]
 [ext_resource type="AudioStream" uid="uid://58vkk5syuo8q" path="res://assets/sounds/hit3.mp3" id="21_i4ail"]
+[ext_resource type="Texture2D" uid="uid://dpe2p7g31v35i" path="res://assets/sprites/projectiles/bullet.png" id="24_l71n6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4ail"]
 atlas = ExtResource("2_smehm")
@@ -407,9 +411,16 @@ one_shot = true
 
 [node name="PlayerStatistics" parent="." unique_id=170912874 instance=ExtResource("6_fjrip")]
 script = ExtResource("7_smehm")
+rumHealthIncreaseValue = 20
 health = 100
 
 [node name="Equipment" parent="." unique_id=1495815464 instance=ExtResource("3_dqkch")]
+
+[node name="StandardGun" type="Node" parent="Equipment" unique_id=681430413]
+script = ExtResource("14_a38lo")
+bullet_scene_to_preload = ExtResource("15_ke2ow")
+damage = 95
+metadata/_custom_type_script = "uid://cu0dybpacktyb"
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=2068998176]
 z_index = 1
@@ -440,6 +451,17 @@ libraries/ = SubResource("AnimationLibrary_l71n6")
 
 [node name="HurtSFX" type="AudioStreamPlayer2D" parent="." unique_id=893919248]
 stream = ExtResource("21_i4ail")
+
+[node name="Aiming" type="Node2D" parent="." unique_id=1230618365]
+script = ExtResource("11_4ni07")
+
+[node name="Crosshair" type="Sprite2D" parent="Aiming" unique_id=1893833416]
+visible = false
+z_index = 2
+texture_filter = 1
+position = Vector2(-7.6293945e-06, -29)
+scale = Vector2(1.6874998, 1.625)
+texture = ExtResource("24_l71n6")
 
 [connection signal="timeout" from="StateMachine/Dying/Timer" to="StateMachine/Dying" method="_on_timer_timeout"]
 [connection signal="health_changed" from="PlayerStatistics" to="." method="_on_player_statistics_health_changed"]

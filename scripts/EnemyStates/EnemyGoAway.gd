@@ -19,6 +19,7 @@ func handle_physics (delta: float) -> void:
 	var isCollidingWithPlayer = is_raycast_colliding_with_player(enemy.raycastTacticsLeft, enemy.raycastTacticsRight, direction*-1)
 	if not isCollidingWithPlayer:
 		finished.emit(CHASING)
+		
 	return
 	
 func handle_input () -> void:

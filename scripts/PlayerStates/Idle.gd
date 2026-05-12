@@ -12,7 +12,7 @@ func handle_input () -> void:
 	if Input.is_action_just_pressed("jump"):
 		finished.emit(JUMPING)
 	
-	if (Input.is_action_just_pressed("attack_left")):
+	if Input.is_action_just_pressed("attack_left") and not Input.is_action_pressed("aim"):
 		finished.emit(ATTACKING)
 	return
 	

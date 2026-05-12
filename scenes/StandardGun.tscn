@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c6k8emdjxpoh4"]
+
+[ext_resource type="Script" uid="uid://cu0dybpacktyb" path="res://scripts/standard_gun.gd" id="1_mdb6y"]
+
+[node name="StandardGun" type="Node" unique_id=1045649320]
+script = ExtResource("1_mdb6y")
+damage = 50
