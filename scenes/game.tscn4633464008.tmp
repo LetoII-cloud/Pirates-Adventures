@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://d0kkkflah2ht" path="res://scripts/game.gd" id="1_dinhu"]
 [ext_resource type="PackedScene" uid="uid://cap7ya5jxmjxa" path="res://scenes/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://cy3xfrn1nahtt" path="res://scenes/Exit.tscn" id="4_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://col8wpc3oade4" path="res://scenes/Level1.tscn" id="5_p57ef"]
 [ext_resource type="Script" uid="uid://dsqpxjttvge34" path="res://scripts/level_manager.gd" id="6_p57ef"]
 [ext_resource type="Script" uid="uid://g38h6gev82j4" path="res://scripts/projectile_spawner.gd" id="11_dinhu"]
 [ext_resource type="AudioStream" uid="uid://bp67w2f83i8se" path="res://assets/music/Alestorm The Quest - 8 Bit.mp3" id="11_kvpfn"]
@@ -13,6 +15,10 @@ script = ExtResource("1_dinhu")
 script = ExtResource("6_p57ef")
 current_level_name = "Level2"
 metadata/_custom_type_script = "uid://dsqpxjttvge34"
+
+[node name="Level1" parent="LevelManager" unique_id=947883876 instance=ExtResource("5_p57ef")]
+
+[node name="Exit2" parent="LevelManager/Level1" unique_id=1265408115 instance=ExtResource("4_u5sy4")]
 
 [node name="InfoUI" type="CanvasLayer" parent="." unique_id=1313932571]
 
@@ -29,13 +35,6 @@ offset_top = 38.0
 offset_right = 148.0
 offset_bottom = 61.0
 text = "Ammo: <ammo>"
-
-[node name="RumLabel" type="Label" parent="InfoUI" unique_id=1060881844]
-offset_left = 20.0
-offset_top = 59.0
-offset_right = 115.0
-offset_bottom = 82.0
-text = "Rum: <rum>"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=233448543]
 stream = ExtResource("11_kvpfn")
@@ -54,4 +53,5 @@ position_smoothing_enabled = true
 script = ExtResource("11_dinhu")
 
 [connection signal="switch_level_call" from="LevelManager" to="." method="_on_level_manager_switch_level_call"]
+[connection signal="level_complete" from="LevelManager/Level1/Exit2" to="." method="_on_exit_2_level_complete"]
 [connection signal="notify_ui" from="Player" to="." method="_on_player_notify_ui"]

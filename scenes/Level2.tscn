@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://7fjicf5ehusw"]
 
 [ext_resource type="Texture2D" uid="uid://bkvq86n8ip38n" path="res://assets/tiles/GRASS+.png" id="1_qwp14"]
+[ext_resource type="Script" uid="uid://3ges8gfwauhk" path="res://scripts/level.gd" id="1_xpq2v"]
 [ext_resource type="Texture2D" uid="uid://bomfxnvq8lu1j" path="res://assets/tiles/Starter Tiles - Platformer/Starter Tiles Platformer/IceSet.png" id="2_xpq2v"]
 [ext_resource type="Texture2D" uid="uid://balh4g3lrsqy1" path="res://assets/tiles/Nature Platformer Tileset [16x16][FREE] - RottingPixels/nature-paltformer-tileset-16x16.png" id="3_0jmjk"]
 [ext_resource type="PackedScene" uid="uid://cnh0t8mssk18a" path="res://scenes/platform.tscn" id="4_v8268"]
 [ext_resource type="PackedScene" uid="uid://dxgopuc2yyltd" path="res://scenes/rum.tscn" id="5_rcugv"]
 [ext_resource type="PackedScene" uid="uid://c5nomj3yccogg" path="res://scenes/killzone.tscn" id="6_3aekd"]
 [ext_resource type="PackedScene" uid="uid://vnxjxtwhxxsj" path="res://scenes/enemy.tscn" id="7_khw7m"]
+[ext_resource type="PackedScene" uid="uid://cy3xfrn1nahtt" path="res://scenes/Exit.tscn" id="9_0jmjk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wd6ad"]
 texture = ExtResource("1_qwp14")
@@ -518,7 +520,10 @@ sources/0 = SubResource("TileSetAtlasSource_wd6ad")
 sources/1 = SubResource("TileSetAtlasSource_cd1f0")
 sources/2 = SubResource("TileSetAtlasSource_k83s3")
 
-[node name="Level2" type="Node" unique_id=1169960797]
+[node name="Level2" type="Node" unique_id=870213988]
+script = ExtResource("1_xpq2v")
+level_name = "Level2"
+metadata/_custom_type_script = "uid://3ges8gfwauhk"
 
 [node name="TileMap" type="TileMap" parent="." unique_id=1767780129]
 tile_set = SubResource("TileSet_2jdof")
@@ -557,3 +562,8 @@ position = Vector2(288, -24)
 
 [node name="Platform4" parent="." unique_id=1747254228 instance=ExtResource("4_v8268")]
 position = Vector2(355, -47)
+
+[node name="Exit" parent="." unique_id=1265408115 instance=ExtResource("9_0jmjk")]
+z_index = 1
+position = Vector2(129, -14)
+scale = Vector2(0.265, 0.265)

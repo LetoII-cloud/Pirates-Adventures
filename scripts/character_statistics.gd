@@ -7,6 +7,10 @@ class_name CharacterStatistics extends Node
 	set(value):
 		health = value
 		health_changed.emit(health)
+		
+func _ready() -> void:
+	
+	pass
 
 func take_damage (dmg : float) -> float:
 	health = clamp(health-dmg, 0, 100)

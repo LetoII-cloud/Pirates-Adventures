@@ -12,38 +12,23 @@ class_name Player extends CharacterBody2D
 @onready var hurt_sfx = $HurtSFX
 @onready var aiming = $Aiming
 
+var is_alive : bool = true
+
 var direction : int
-
-
 var sword
-
-var is_attacking := false
 
 func _ready() -> void:
 	sword = Equipment.StandardSword.new()
+	
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	print (aiming.is_aiming)
 	if playerStatistics.health > 0 and event.is_action_pressed("attack_left") and aiming.is_aiming:
 		shoot(aiming.direction)
 		get_viewport().set_input_as_handled()
 	
 func _physics_process(delta: float) -> void:
-	# move_and_slide()		
-#	if Input.is_action_just_pressed("attack_left") and not is_attacking:
-#		is_attacking = true
-#		#animatedSprite.play("attack_new")
-#		animationPlayer.play("attacktest")
-#
-#	if Input.is_action_just_pressed("use_rum"):
-#		get_node("Equipment").useRum()
-#
-#	if not is_attacking:
-#		update_animation(direction)
-#
-#	move_and_slide()
-
+	
 	return
 
 func set_facing (direction: int) -> void:
@@ -81,6 +66,9 @@ func _on_player_statistics_health_changed(new_health: int) -> void:
 	notify_ui.emit("health", new_health)
 
 func die () -> void:
+	if !is_alive:
+		return
+	is_alive = false
 	stateMachine.change_state(PlayerState.DYING)
 	stateMachine.lock_transistions = true
 	equipment.queue_free()
@@ -89,6 +77,9 @@ func die () -> void:
 
 func _on_equipment_ammo_amount_change(new_amount: int) -> void:
 	notify_ui.emit("ammo", new_amount)
+	
+func _on_equipment_rum_amount_change(new_amount: int) -> void:
+	notify_ui.emit("rum", new_amount)
 	
 func shoot (target_position: Vector2) -> void:
 	if equipment.ammo > 0:

@@ -2,10 +2,13 @@ class_name Equipment extends Node
 	
 var standardSword
 
-@export var rums 	:= 0
+@export var rums : int:
+	set(value):
+		rums = value
+		rum_amount_change.emit(value)
+		
 @export var bombs 	:= 0
 @export var coins	:= 0
-@export var initial_ammo := 5
 @export var ammo : int:
 	set(value):      
 		ammo = value
@@ -43,6 +46,7 @@ func useRum () -> void:
 	
 
 signal ammo_amount_change (new_amount : int)
+signal rum_amount_change (new_amount : int)
 
 class StandardSword extends Sprite2D :
 	

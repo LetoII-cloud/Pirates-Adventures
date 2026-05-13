@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bg64nocjicwuq"]
+
+[ext_resource type="Script" uid="uid://dsqpxjttvge34" path="res://scripts/level_manager.gd" id="1_eb86q"]
+
+[node name="LevelManager" type="Node" unique_id=1299167104]
+script = ExtResource("1_eb86q")
+current_level_name = "Level1"
