@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://kkpxkqh14n7x" path="res://assets/sprites/archiwum/ZIPs/zbior/player death south spritesheet.png" id="16_60mlk"]
 [ext_resource type="Script" uid="uid://byjdxbm8xq13h" path="res://scripts/player_hurtbox.gd" id="16_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://bne7755aap1br" path="res://assets/sprites/archiwum/ZIPs/zbior/player hit spritesheeet.png" id="17_4r5pv"]
+[ext_resource type="Script" uid="uid://ddvj86i1cphrt" path="res://scripts/PlayerStates/Swinging.gd" id="18_swing"]
 [ext_resource type="AudioStream" uid="uid://58vkk5syuo8q" path="res://assets/sounds/hit3.mp3" id="21_i4ail"]
 [ext_resource type="Texture2D" uid="uid://dpe2p7g31v35i" path="res://assets/sprites/projectiles/bullet.png" id="24_l71n6"]
 
@@ -398,6 +399,9 @@ script = ExtResource("5_dhpf4")
 
 [node name="Falling" type="Node" parent="StateMachine" unique_id=2069931260]
 script = ExtResource("7_f1ej7")
+
+[node name="Swinging" type="Node" parent="StateMachine" unique_id=1516000842]
+script = ExtResource("18_swing")
 
 [node name="Hurt" type="Node" parent="StateMachine" unique_id=1065577705]
 script = ExtResource("9_fulsm")

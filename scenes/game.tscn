@@ -11,7 +11,7 @@ script = ExtResource("1_dinhu")
 
 [node name="LevelManager" type="Node" parent="." unique_id=1684250456]
 script = ExtResource("6_p57ef")
-current_level_name = "Level2"
+current_level_name = "Level1"
 metadata/_custom_type_script = "uid://dsqpxjttvge34"
 
 [node name="InfoUI" type="CanvasLayer" parent="." unique_id=1313932571]
@@ -43,7 +43,7 @@ autoplay = true
 bus = &"Music"
 
 [node name="Player" parent="." unique_id=2078947028 instance=ExtResource("1_uwrxv")]
-position = Vector2(-62, 6)
+position = Vector2(-293, -26)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1148561788]
 zoom = Vector2(1.835, 1.835)

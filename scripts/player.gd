@@ -13,6 +13,9 @@ class_name Player extends CharacterBody2D
 @onready var aiming = $Aiming
 
 var is_alive : bool = true
+var current_rope: Rope
+var nearby_rope: Rope
+var keep_velocity_on_next_jump := false
 
 var direction : int
 var sword
@@ -69,6 +72,8 @@ func die () -> void:
 	if !is_alive:
 		return
 	is_alive = false
+	if current_rope:
+		current_rope.release_player()
 	stateMachine.change_state(PlayerState.DYING)
 	stateMachine.lock_transistions = true
 	equipment.queue_free()
@@ -87,4 +92,32 @@ func shoot (target_position: Vector2) -> void:
 		equipment.standard_gun.shoot (global_position, target_position)
 	else:
 		print("No ammo.")
+
+func grab_rope(rope: Rope) -> void:
+	if not is_alive:
+		return
+
+	current_rope = rope
+	stateMachine.change_state(PlayerState.SWINGING)
+
+func release_rope(release_velocity: Vector2, apply_jump := false) -> void:
+	current_rope = null
+	velocity = release_velocity
+	if apply_jump:
+		velocity.y += JUMP_VELOCITY
+		keep_velocity_on_next_jump = true
+
+func enter_rope_area(rope: Rope) -> void:
+	nearby_rope = rope
+
+func exit_rope_area(rope: Rope) -> void:
+	if nearby_rope == rope:
+		nearby_rope = null
+
+func try_grab_nearby_rope() -> bool:
+	if is_on_floor() or not nearby_rope:
+		return false
+
+	nearby_rope.grab_player(self)
+	return current_rope == nearby_rope
 		
