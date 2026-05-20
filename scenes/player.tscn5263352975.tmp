@@ -432,7 +432,7 @@ animation = &"hit"
 [node name="BasicAttackArea" type="Area2D" parent="PlayerSprite" unique_id=1671878146]
 
 [node name="BasicAttackCollision" type="CollisionShape2D" parent="PlayerSprite/BasicAttackArea" unique_id=482700656 groups=["hitboxes"]]
-position = Vector2(22, 0)
+position = Vector2(22, -1)
 shape = SubResource("RectangleShape2D_fjrip")
 disabled = true
 

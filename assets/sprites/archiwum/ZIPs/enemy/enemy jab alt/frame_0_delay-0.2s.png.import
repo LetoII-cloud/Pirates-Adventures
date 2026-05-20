@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jiakfhyocnfa"
-path="res://.godot/imported/frame_5_delay-0.2s.png-2882b6e22778f4c064345cfa9998e280.ctex"
+uid="uid://g8se2mat77tk"
+path="res://.godot/imported/frame_0_delay-0.2s.png-d07f828c0dc20bfe11f8aa63c2aaf2d0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/helperscripts/frame_5_delay-0.2s.png"
-dest_files=["res://.godot/imported/frame_5_delay-0.2s.png-2882b6e22778f4c064345cfa9998e280.ctex"]
+source_file="res://assets/sprites/archiwum/ZIPs/enemy/enemy jab alt/frame_0_delay-0.2s.png"
+dest_files=["res://.godot/imported/frame_0_delay-0.2s.png-d07f828c0dc20bfe11f8aa63c2aaf2d0.ctex"]
 
 [params]
 

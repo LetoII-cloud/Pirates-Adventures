@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjaelaeynjkom"
-path="res://.godot/imported/frame_3_delay-0.2s.png-c4e4754b44c661a22294271b122de983.ctex"
+uid="uid://dv8aqxbeyxyv"
+path="res://.godot/imported/enemy jab alt.png-d0d54acbd6c345993bc3c4b22acdbe69.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/helperscripts/frame_3_delay-0.2s.png"
-dest_files=["res://.godot/imported/frame_3_delay-0.2s.png-c4e4754b44c661a22294271b122de983.ctex"]
+source_file="res://assets/sprites/archiwum/ZIPs/zbior/enemy/enemy jab alt.png"
+dest_files=["res://.godot/imported/enemy jab alt.png-d0d54acbd6c345993bc3c4b22acdbe69.ctex"]
 
 [params]
 

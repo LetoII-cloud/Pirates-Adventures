@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bfegjbo03i66f" path="res://assets/sprites/archiwum/ZIPs/zbior/enemy/enemy walking spritesheet.png" id="3_nenq2"]
 [ext_resource type="Script" uid="uid://db8kkp07rrtks" path="res://scripts/EnemyStates/EnemyIdle.gd" id="4_5uy6h"]
 [ext_resource type="Texture2D" uid="uid://4v7rbf53wic2" path="res://assets/sprites/archiwum/ZIPs/zbior/enemy/enemy death spritesheet.png" id="4_g0wcc"]
+[ext_resource type="Texture2D" uid="uid://dv8aqxbeyxyv" path="res://assets/sprites/archiwum/ZIPs/zbior/enemy/enemy jab alt.png" id="4_rogs8"]
 [ext_resource type="Texture2D" uid="uid://dwyt1ej1erh72" path="res://assets/sprites/archiwum/ZIPs/zbior/enemy/enemy running spritesheet.png" id="4_w8i8w"]
 [ext_resource type="Script" uid="uid://dco25nt8rc6xe" path="res://scripts/EnemyStates/EnemyFalling.gd" id="5_c4w8v"]
 [ext_resource type="Texture2D" uid="uid://cpql1koti4cm0" path="res://assets/sprites/archiwum/ZIPs/zbior/enemy/enemy damage spritesheet.png" id="6_s1ycm"]
@@ -19,9 +20,21 @@
 [ext_resource type="Script" uid="uid://cc2luk4qnstbq" path="res://scripts/EnemyStates/EnemyHurt.gd" id="16_shcg2"]
 [ext_resource type="AudioStream" uid="uid://58vkk5syuo8q" path="res://assets/sounds/hit3.mp3" id="17_1x4g4"]
 [ext_resource type="Script" uid="uid://bbgcflcbruxlu" path="res://scripts/EnemyStates/EnemyDying.gd" id="17_ile5s"]
+[ext_resource type="Script" uid="uid://c3a041rso10dd" path="res://scenes/EnemyBlocking.gd" id="18_2pwtc"]
+[ext_resource type="AudioStream" uid="uid://xtal8v7xvqby" path="res://assets/sounds/sword effects/clashes/clash 1.mp3" id="20_lioqc"]
+[ext_resource type="AudioStream" uid="uid://b6m7oeq1m36fs" path="res://assets/sounds/sword effects/clashes/clash 2.mp3" id="21_0lg75"]
+[ext_resource type="AudioStream" uid="uid://iny7a5iuiar0" path="res://assets/sounds/sword effects/clashes/clash 3.mp3" id="22_lsnsy"]
+[ext_resource type="AudioStream" uid="uid://d3d4ix5245kd2" path="res://assets/sounds/sword effects/clashes/clash 4.mp3" id="23_thsr5"]
+[ext_resource type="AudioStream" uid="uid://fpyj32ggowx0" path="res://assets/sounds/sword effects/clashes/clash 5.mp3" id="24_ekh6n"]
+[ext_resource type="AudioStream" uid="uid://nr4w8ym3elcl" path="res://assets/sounds/sword effects/clashes/clash 6.mp3" id="25_2sbpf"]
+[ext_resource type="AudioStream" uid="uid://ognrkv24p68i" path="res://assets/sounds/sword effects/clashes/clash 7.mp3" id="26_78kod"]
+[ext_resource type="AudioStream" uid="uid://b7ld5em4vvgif" path="res://assets/sounds/sword effects/clashes/clash 8.mp3" id="27_605iw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7p1mj"]
 radius = 12.0415945
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enemy_hurtbox"]
+size = Vector2(22.5, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j0cyh"]
 atlas = ExtResource("2_md484")
@@ -34,6 +47,14 @@ region = Rect2(68, 0, 68, 68)
 [sub_resource type="AtlasTexture" id="AtlasTexture_s1ycm"]
 atlas = ExtResource("2_md484")
 region = Rect2(136, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x6q4o"]
+atlas = ExtResource("4_rogs8")
+region = Rect2(0, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2tuss"]
+atlas = ExtResource("4_rogs8")
+region = Rect2(68, 0, 68, 68)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4rgx"]
 atlas = ExtResource("4_g0wcc")
@@ -115,6 +136,18 @@ region = Rect2(136, 0, 68, 68)
 atlas = ExtResource("1_7p1mj")
 region = Rect2(204, 0, 68, 68)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_7v6cf"]
+atlas = ExtResource("4_rogs8")
+region = Rect2(68, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vab5u"]
+atlas = ExtResource("4_rogs8")
+region = Rect2(0, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qiusc"]
+atlas = ExtResource("4_rogs8")
+region = Rect2(136, 0, 68, 68)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_shcg2"]
 atlas = ExtResource("4_w8i8w")
 region = Rect2(0, 0, 68, 68)
@@ -173,6 +206,17 @@ animations = [{
 }],
 "loop": false,
 "name": &"attacking",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x6q4o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2tuss")
+}],
+"loop": false,
+"name": &"blocking",
 "speed": 5.0
 }, {
 "frames": [],
@@ -258,6 +302,20 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7v6cf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vab5u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qiusc")
+}],
+"loop": false,
+"name": &"middle_block_hit",
 "speed": 5.0
 }, {
 "frames": [{
@@ -364,10 +422,10 @@ tracks/0/path = NodePath("AnimatedSprite2D/AttackArea/AttackCollision:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.19999999, 0.46666667),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.19999999, 0.23333333, 0.46666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [true, false, true]
+"values": [true, false, false, true]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -394,10 +452,38 @@ tracks/2/keys = {
 "values": [&"attacking"]
 }
 
+[sub_resource type="Animation" id="Animation_2pwtc"]
+resource_name = "block_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"blocking"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.73),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wtq4b"]
 _data = {
 &"RESET": SubResource("Animation_8qclf"),
-&"attack_newtest": SubResource("Animation_otmr2")
+&"attack_newtest": SubResource("Animation_otmr2"),
+&"block_animation": SubResource("Animation_2pwtc")
 }
 
 [node name="Enemy" type="CharacterBody2D" unique_id=217064500]
@@ -409,13 +495,30 @@ script = ExtResource("1_md0e3")
 position = Vector2(-1, 16)
 shape = SubResource("CircleShape2D_7p1mj")
 
-[node name="Hurtbox" type="Area2D" parent="." unique_id=1120873149 groups=["hurtboxes"]]
+[node name="Hurtboxes" type="Node2D" parent="." unique_id=1730505669]
+
+[node name="HurtboxTop" type="Area2D" parent="Hurtboxes" unique_id=1592505702 groups=["hurtboxes"]]
+script = ExtResource("8_s1ycm")
+zone = "top"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtboxes/HurtboxTop" unique_id=936162685]
+position = Vector2(0, -10.475)
+shape = SubResource("RectangleShape2D_enemy_hurtbox")
+
+[node name="HurtboxMiddle" type="Area2D" parent="Hurtboxes" unique_id=1100596339 groups=["hurtboxes"]]
 script = ExtResource("8_s1ycm")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=2142708467]
-position = Vector2(-1, 5.525)
-scale = Vector2(1.985, 1.985)
-shape = SubResource("CircleShape2D_7p1mj")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtboxes/HurtboxMiddle" unique_id=796030179]
+position = Vector2(0, 5.525)
+shape = SubResource("RectangleShape2D_enemy_hurtbox")
+
+[node name="HurtboxDown" type="Area2D" parent="Hurtboxes" unique_id=1936478251 groups=["hurtboxes"]]
+script = ExtResource("8_s1ycm")
+zone = "down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtboxes/HurtboxDown" unique_id=374997224]
+position = Vector2(0, 21.525)
+shape = SubResource("RectangleShape2D_enemy_hurtbox")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=394273957]
 sprite_frames = SubResource("SpriteFrames_xwavj")
@@ -461,6 +564,10 @@ script = ExtResource("17_ile5s")
 wait_time = 5.0
 one_shot = true
 
+[node name="EnemyBlocking" type="Node" parent="StateMachine" unique_id=1450508172]
+script = ExtResource("18_2pwtc")
+metadata/_custom_type_script = "uid://cyafup1emxi7p"
+
 [node name="EnemyStatistics" type="Node" parent="." unique_id=1563059332]
 script = ExtResource("10_8qclf")
 attack_strength = 40
@@ -495,7 +602,38 @@ collision_mask = 2
 [node name="HurtSFX" type="AudioStreamPlayer2D" parent="." unique_id=1280559399]
 stream = ExtResource("17_1x4g4")
 
-[connection signal="damage_info" from="Hurtbox" to="." method="_on_hurtbox_damage_info"]
+[node name="BlockingClashSFX" type="Node" parent="." unique_id=560947798]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=1097844155]
+stream = ExtResource("20_lioqc")
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=276929734]
+stream = ExtResource("21_0lg75")
+
+[node name="AudioStreamPlayer2D3" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=19356023]
+stream = ExtResource("22_lsnsy")
+
+[node name="AudioStreamPlayer2D4" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=1806587187]
+stream = ExtResource("23_thsr5")
+
+[node name="AudioStreamPlayer2D5" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=660145502]
+stream = ExtResource("24_ekh6n")
+
+[node name="AudioStreamPlayer2D6" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=135910537]
+stream = ExtResource("25_2sbpf")
+
+[node name="AudioStreamPlayer2D7" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=1209464470]
+stream = ExtResource("26_78kod")
+
+[node name="AudioStreamPlayer2D8" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=1591249899]
+stream = ExtResource("27_605iw")
+
+[connection signal="block_hit" from="Hurtboxes/HurtboxTop" to="." method="_on_hurtbox_top_block_hit"]
+[connection signal="damage_info" from="Hurtboxes/HurtboxTop" to="." method="_on_hurtbox_damage_info"]
+[connection signal="block_hit" from="Hurtboxes/HurtboxMiddle" to="." method="_on_hurtbox_middle_block_hit"]
+[connection signal="damage_info" from="Hurtboxes/HurtboxMiddle" to="." method="_on_hurtbox_damage_info"]
+[connection signal="block_hit" from="Hurtboxes/HurtboxDown" to="." method="_on_hurtbox_down_block_hit"]
+[connection signal="damage_info" from="Hurtboxes/HurtboxDown" to="." method="_on_hurtbox_damage_info"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="StateMachine/EnemyHurt" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="AnimatedSprite2D/AttackArea" to="StateMachine/EnemyAttacking" method="_on_attack_area_area_entered"]

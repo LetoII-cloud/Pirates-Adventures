@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnah6lswx0pp0"
-path="res://.godot/imported/player death south spritesheet.png-8899cebb96d5762cdaf8180aec7a2451.ctex"
+uid="uid://ba7vnj4vn8wht"
+path="res://.godot/imported/frame_1_delay-0.2s.png-e18911ae08d9679191642bfff5819d9a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/helperscripts/player death south spritesheet.png"
-dest_files=["res://.godot/imported/player death south spritesheet.png-8899cebb96d5762cdaf8180aec7a2451.ctex"]
+source_file="res://assets/sprites/archiwum/ZIPs/enemy/enemy jab/frame_1_delay-0.2s.png"
+dest_files=["res://.godot/imported/frame_1_delay-0.2s.png-e18911ae08d9679191642bfff5819d9a.ctex"]
 
 [params]
 

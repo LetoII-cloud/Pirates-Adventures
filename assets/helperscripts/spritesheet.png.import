@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://df67e4gxeoq4w"
-path="res://.godot/imported/frame_4_delay-0.2s.png-667c9a0e4da5d499ebb78e5b160460c3.ctex"
+uid="uid://duukxahemkltd"
+path="res://.godot/imported/spritesheet.png-639e3bb99250fdbb75d340aa7688dd92.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/helperscripts/frame_4_delay-0.2s.png"
-dest_files=["res://.godot/imported/frame_4_delay-0.2s.png-667c9a0e4da5d499ebb78e5b160460c3.ctex"]
+source_file="res://assets/helperscripts/spritesheet.png"
+dest_files=["res://.godot/imported/spritesheet.png-639e3bb99250fdbb75d340aa7688dd92.ctex"]
 
 [params]
 

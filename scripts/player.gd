@@ -11,11 +11,14 @@ class_name Player extends CharacterBody2D
 @onready var stateMachine = $StateMachine
 @onready var hurt_sfx = $HurtSFX
 @onready var aiming = $Aiming
+@onready var basic_attack_area := $PlayerSprite/BasicAttackArea
+@onready var basic_attack_collision := $PlayerSprite/BasicAttackArea/BasicAttackCollision
 
 var is_alive : bool = true
 
 var direction : int
 var sword
+var attack_zone: String = "middle"
 
 func _ready() -> void:
 	sword = Equipment.StandardSword.new()
@@ -26,10 +29,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if playerStatistics.health > 0 and event.is_action_pressed("attack_left") and aiming.is_aiming:
 		shoot(aiming.direction)
 		get_viewport().set_input_as_handled()
+
 	
 func _physics_process(delta: float) -> void:
 	
 	return
+
 
 func set_facing (direction: int) -> void:
 	self.direction = self.direction if direction == 0 else direction # don't change if param=0
@@ -38,7 +43,26 @@ func set_facing (direction: int) -> void:
 	elif direction > 0:
 		animatedSprite.scale.x = 1
 
-		
+func set_attack_zone() -> void:
+	print(to_local(get_global_mouse_position()))
+	var mouse_y = to_local(get_global_mouse_position()).y
+	var attack_area_height = basic_attack_collision.shape.get_rect().size.y
+	
+	var zone : String
+	var attack_area_y : float
+	
+	if mouse_y < -attack_area_height/2:
+		attack_area_y = -attack_area_height
+		attack_zone = "top"
+	elif mouse_y > attack_area_height/2:
+		attack_area_y = attack_area_height
+		attack_zone = "down"
+	else:
+		attack_area_y = 0
+		attack_zone = "middle"
+	
+	basic_attack_area.position.y = attack_area_y
+	
 # If you do not create a RESET track in your AnimationPlayer, you will get errors, including your Player sprite not starting in the correct position when you load the scene. 
 
 #To avoid problems, create another animation in AnimatedSprite2D called RESET (all caps) and use the FIRST idle down frame (frame 0) that you used for the idle down animation.

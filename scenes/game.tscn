@@ -37,11 +37,6 @@ offset_right = 115.0
 offset_bottom = 82.0
 text = "Rum: <rum>"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=233448543]
-stream = ExtResource("11_kvpfn")
-autoplay = true
-bus = &"Music"
-
 [node name="Player" parent="." unique_id=2078947028 instance=ExtResource("1_uwrxv")]
 position = Vector2(-62, 6)
 
@@ -52,6 +47,11 @@ position_smoothing_enabled = true
 
 [node name="ProjectileSpawner" type="Node" parent="." unique_id=1467812775]
 script = ExtResource("11_dinhu")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=233448543]
+stream = ExtResource("11_kvpfn")
+autoplay = true
+bus = &"Music"
 
 [connection signal="switch_level_call" from="LevelManager" to="." method="_on_level_manager_switch_level_call"]
 [connection signal="notify_ui" from="Player" to="." method="_on_player_notify_ui"]

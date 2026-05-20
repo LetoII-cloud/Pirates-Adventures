@@ -10,6 +10,8 @@ const CHASING = "EnemyChasing"
 const GOAWAY = "EnemyGoAway"
 const ENEMYHURT = "EnemyHurt"
 const ENEMYDYING = "EnemyDying"
+const BLOCKING = "EnemyBlocking"
+const BLOCK_HIT = "EnemyBlockHit"
 
 
 var enemy: Enemy

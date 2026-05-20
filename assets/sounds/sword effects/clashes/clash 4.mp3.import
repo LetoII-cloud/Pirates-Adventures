@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d3d4ix5245kd2"
+path="res://.godot/imported/clash 4.mp3-f236f8b9662c08c3b7137d51296fee7e.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/sword effects/clashes/clash 4.mp3"
+dest_files=["res://.godot/imported/clash 4.mp3-f236f8b9662c08c3b7137d51296fee7e.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
