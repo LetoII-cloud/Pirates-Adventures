@@ -1,6 +1,7 @@
 class_name Enemy extends CharacterBody2D
 
 const SPEED = 50
+const BLOCK_HIT_ATTACK_RECOVERY_TIME := 0.6
 
 @onready var raycastLeft = $RayCastLeft
 @onready var raycastRight = $RayCastRight
@@ -23,7 +24,18 @@ const SPEED = 50
 
 var times_attacked := 0
 var protected_zone : String = "middle"
-var is_blocking : bool = false
+
+var is_blocking : bool = false:
+	set (value):
+		is_blocking = value
+		if (is_blocking):
+			block_timer.start()
+		
+var is_blocking_hit := false
+var attack_recovery_time := 0.0
+
+@onready var block_timer := $BlockTimer
+
 
 ### move to some kind of file reading, resource etc.
 @onready var audio_sfx := [
@@ -43,8 +55,21 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	
+	if attack_recovery_time > 0.0:
+		attack_recovery_time = maxf(attack_recovery_time - delta, 0.0)
 	return
+
+
+func can_attack() -> bool:
+	return attack_recovery_time <= 0.0
+
+
+func start_attack_recovery(duration: float) -> void:
+	attack_recovery_time = maxf(attack_recovery_time, duration)
+
+
+func disable_attack_collision() -> void:
+	$AnimatedSprite2D/AttackArea/AttackCollision.set_deferred("disabled", true)
 	
 
 func set_facing (direction: int) -> void:
@@ -72,21 +97,34 @@ func _on_hurtbox_damage_info(dmg: int, zone: String = "middle") -> void:
 
 
 func _on_enemy_dying_take_collision_away() -> void:
-	print("FREEING")
 	get_node("CollisionShape2D").queue_free()
 
 
-func _on_enemy_blocking_toggle_blocking(block_active: bool, zone: String) -> void:
+func _on_enemy_attacking_toggle_blocking(block_active: bool, zone: String) -> void:
+	handle_blocking(block_active, zone)
+	
+func handle_blocking(block_active: bool, zone: String):
 	protected_zone = zone if block_active else ''
 	is_blocking = block_active
-	print (protected_zone)
 	
-
 func handle_block_hit() -> void:
-	animatedSprite.play("middle_block_hit")
+
+	is_blocking_hit = true
+	start_attack_recovery(BLOCK_HIT_ATTACK_RECOVERY_TIME)
+	animationPlayer.set_deferred("stop", null)
+	disable_attack_collision()
+	
 	var rng := RandomNumberGenerator.new()
-	var sound_number = rng.randf_range(0, audio_sfx.size()-1)
+	var sound_number = rng.randi_range(0, audio_sfx.size() - 1)
 	audio_sfx [sound_number].play()
+	
+	is_blocking = false
+	protected_zone = ''
+	block_timer.stop()
+	
+	print("BLOCK HIT -> GOAWAY")
+	#stateMachine.change_state(EnemyState.GOAWAY)
+	
 	return
 	
 
@@ -99,3 +137,15 @@ func _on_hurtbox_middle_block_hit() -> void:
 
 func _on_hurtbox_down_block_hit() -> void:
 	handle_block_hit()
+
+
+func _on_block_timer_timeout() -> void:
+	print("BLOCK TIMER finished")
+	is_blocking = false
+	protected_zone = ''
+	#stateMachine.change_state(EnemyState.GOAWAY)
+	#naprawic niewidzialne ataki po bloku
+
+
+func _on_enemy_go_away_toggle_blocking(block_active: bool, zone: String) -> void:
+	handle_blocking(block_active, zone)

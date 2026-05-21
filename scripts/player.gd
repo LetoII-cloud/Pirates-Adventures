@@ -44,7 +44,6 @@ func set_facing (direction: int) -> void:
 		animatedSprite.scale.x = 1
 
 func set_attack_zone() -> void:
-	print(to_local(get_global_mouse_position()))
 	var mouse_y = to_local(get_global_mouse_position()).y
 	var attack_area_height = basic_attack_collision.shape.get_rect().size.y
 	
@@ -73,7 +72,6 @@ func _on_hurtbox_damage_info(dmg: int) -> void:
 	take_damage (dmg)
 
 func take_damage (dmg: float) -> void:
-	print('taking dmg')
 	var health = playerStatistics.take_damage(dmg)
 	hurt_sfx.play()
 	

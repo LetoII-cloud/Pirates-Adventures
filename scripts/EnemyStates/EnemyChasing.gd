@@ -4,6 +4,7 @@ var chasingSpeed := 0.0
 var direction = -1
 
 func enter() -> void:
+	#dsuper()
 	chasingSpeed = enemy.SPEED * 2.5
 	enemy.animatedSprite.play("running")
 	return
@@ -14,7 +15,7 @@ func handle_physics (delta: float) -> void:
 		
 	handle_movement(direction, chasingSpeed)
 	
-	if is_raycast_colliding_with_player(enemy.raycastLeft, enemy.raycastRight, direction):
+	if enemy.can_attack() and is_raycast_colliding_with_player(enemy.raycastLeft, enemy.raycastRight, direction):
 		finished.emit(ATTACKING)
 	return
 	

@@ -3,7 +3,12 @@ extends EnemyState
 var direction := -1
 
 func enter() -> void:
-	enemy.animatedSprite.play("walking")
+	super()
+	
+	if enemy.is_blocking:
+		enemy.animatedSprite.play("block_goaway")
+	else:
+		enemy.animatedSprite.play("walking")
 	return
 
 func handle_input () -> void:

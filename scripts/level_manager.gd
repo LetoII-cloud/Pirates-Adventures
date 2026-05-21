@@ -20,14 +20,11 @@ func switch_level (level_name : String) -> void:
 	if current_level != null:
 		remove_current_level()
 	var target_level_name = current_level_name if (current_level_name != null and current_level_name != '') else "Level1"
-	print ('cirremt ma', target_level_name)
 	var current_level_packed_scene : PackedScene = LEVELS[target_level_name]
 	current_level = current_level_packed_scene.instantiate()
 	add_child(current_level)
 	if current_level.exit != null:
-		print('jush')
 		current_level.exit.level_complete.connect(switch_level) # jak to zapewnic?
-	print('adding child!')
 
 func remove_current_level ():
 	current_level.queue_free()

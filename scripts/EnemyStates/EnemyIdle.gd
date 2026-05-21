@@ -1,11 +1,16 @@
 class_name EnemyIdle extends EnemyState
 
 func enter() -> void:
+	super()
+	
 	if not enemy:
 		return
 		
 	enemy.velocity.x = 0
-	enemy.animatedSprite.play("idle")
+	if enemy.is_blocking:
+		enemy.animatedSprite.play("blocking")
+	else:
+		enemy.animatedSprite.play("idle")
 	return
 
 func handle_input () -> void:

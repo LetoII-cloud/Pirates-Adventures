@@ -1,6 +1,7 @@
 class_name EnemyFalling extends EnemyState
 
 func enter() -> void:
+	super()
 	return
 
 func handle_input () -> void:

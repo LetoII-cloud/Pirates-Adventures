@@ -3,6 +3,7 @@ extends EnemyState
 signal hurt_finished ()
 
 func enter () -> void:
+	super()
 	# the commented lines below are to review in the future.
 	# Without them the hurt animation seems to be looped for a moment
 	enemy.animationPlayer.pause()
@@ -26,5 +27,6 @@ func handle_update () -> void:
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	hurt_finished.emit()
+	# przerobic na taktyczne
 	if enemy.animatedSprite.animation == "hit":
 		finished.emit(CHASING)

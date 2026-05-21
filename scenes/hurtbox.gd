@@ -10,7 +10,7 @@ func take_damage (dmg : int) -> void:
 	
 func is_protected() -> bool:
 	var enemy := owner as Enemy
-	return enemy.protected_zone == zone
+	return enemy.is_blocking and enemy.protected_zone == zone
 
 func handle_block_hit () -> void:
 	block_hit.emit()

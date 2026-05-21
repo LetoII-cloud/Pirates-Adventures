@@ -13,15 +13,13 @@ func _ready() -> void:
 	pass
 
 func take_damage (dmg : float) -> float:
-	health = clamp(health-dmg, 0, 100)
+	health = clamp(health-dmg, 0, 9000)
 	return health
 
 func usedRum () -> bool:
 	if health == 100:
 		return false
 	health = clamp(health + rumHealthIncreaseValue, 0, 100)
-	print(health)
-	print('----')
 	return true
 	
 

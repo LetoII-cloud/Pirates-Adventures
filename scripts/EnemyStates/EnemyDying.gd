@@ -5,6 +5,7 @@ signal take_collision_away ()
 @onready var deadTimer = $Timer
 
 func enter () -> void:
+	super()
 	enemy.animatedSprite.play ("dying")
 	deadTimer.start()
 	enemy.stateMachine.lock_transistions = true

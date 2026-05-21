@@ -14,8 +14,6 @@ func _process(delta: float) -> void:
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_hurtboxes"):
-		print ('level complete')
-		print ('next level = ', next_level)
 		call_deferred("emit_signal", "level_complete", next_level)
 		
 signal level_complete (next_level : String)

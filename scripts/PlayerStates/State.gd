@@ -1,6 +1,7 @@
 class_name State extends Node
 
 func enter () -> void:
+	print(self.name)
 	pass
 
 func exit () -> void:
