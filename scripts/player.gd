@@ -77,7 +77,7 @@ func take_damage (dmg: float) -> void:
 	
 	if stateMachine.currentState.name != PlayerState.HURT and playerStatistics.health > 0:
 			stateMachine.change_state(PlayerState.HURT)
-			#stateMachine.lock_transistions = true
+			#stateMachine.lock_transitions = true
 			
 	if playerStatistics.health <= 0:
 		die()
@@ -92,7 +92,7 @@ func die () -> void:
 		return
 	is_alive = false
 	stateMachine.change_state(PlayerState.DYING)
-	stateMachine.lock_transistions = true
+	stateMachine.lock_transitions = true
 	equipment.queue_free()
 		
 

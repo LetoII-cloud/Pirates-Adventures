@@ -412,7 +412,7 @@ one_shot = true
 [node name="PlayerStatistics" parent="." unique_id=170912874 instance=ExtResource("6_fjrip")]
 script = ExtResource("7_smehm")
 rumHealthIncreaseValue = 20
-health = 9000
+health = 100
 
 [node name="Equipment" parent="." unique_id=1495815464 instance=ExtResource("3_dqkch")]
 ammo = 4

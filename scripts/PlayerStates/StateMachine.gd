@@ -2,7 +2,7 @@ class_name StateMachine extends Node
 
 @export var initial_state: State
 var currentState : State
-var lock_transistions := false
+var lock_transitions := false
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,7 +35,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		currentState.handle_input()
 
 func change_state (newState : String):
-	if lock_transistions:
+	if lock_transitions:
 		print ("Transition locked.")
 		return
 	
@@ -47,4 +47,4 @@ func change_state (newState : String):
 	return
 
 func _on_enemy_hurt_hurt_finished() -> void:
-	lock_transistions = false
+	lock_transitions = false

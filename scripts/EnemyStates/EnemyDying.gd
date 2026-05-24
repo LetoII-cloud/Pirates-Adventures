@@ -8,7 +8,7 @@ func enter () -> void:
 	super()
 	enemy.animatedSprite.play ("dying")
 	deadTimer.start()
-	enemy.stateMachine.lock_transistions = true
+	enemy.stateMachine.lock_transitions = true
 	take_collision_away.emit()
 	return
 

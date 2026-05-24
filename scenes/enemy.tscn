@@ -275,7 +275,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0pw1s")
 }],
-"loop": false,
+"loop": true,
 "name": &"blocking hit walking",
 "speed": 5.0
 }, {
@@ -339,22 +339,22 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.9,
 "texture": SubResource("AtlasTexture_lsnsy")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": SubResource("AtlasTexture_thsr5")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": SubResource("AtlasTexture_ekh6n")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": SubResource("AtlasTexture_2sbpf")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": SubResource("AtlasTexture_78kod")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": SubResource("AtlasTexture_605iw")
 }],
 "loop": false,
@@ -598,6 +598,7 @@ shape = SubResource("RectangleShape2D_enemy_hurtbox")
 sprite_frames = SubResource("SpriteFrames_xwavj")
 animation = &"attacking"
 autoplay = "idle"
+frame = 1
 
 [node name="AttackArea" type="Area2D" parent="AnimatedSprite2D" unique_id=1785619098]
 
@@ -620,6 +621,7 @@ script = ExtResource("6_xwavj")
 
 [node name="EnemyAttacking" type="Node" parent="StateMachine" unique_id=810439290]
 script = ExtResource("9_ipns3")
+delayed_chase_seconds = 2
 
 [node name="EnemyChasing" type="Node" parent="StateMachine" unique_id=1804095801]
 script = ExtResource("11_otmr2")
@@ -640,7 +642,7 @@ one_shot = true
 [node name="EnemyStatistics" type="Node" parent="." unique_id=1563059332]
 script = ExtResource("10_8qclf")
 attack_strength = 40
-health = 10000
+health = 100
 metadata/_custom_type_script = "uid://km81vtcke4tv"
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1341160616]
@@ -698,8 +700,16 @@ stream = ExtResource("26_78kod")
 stream = ExtResource("27_605iw")
 
 [node name="BlockTimer" type="Timer" parent="." unique_id=1973597192]
-wait_time = 2.0
+wait_time = 5.0
 one_shot = true
+
+[node name="RayCastFloorLeft" type="RayCast2D" parent="." unique_id=1206746679]
+position = Vector2(-17, 28)
+target_position = Vector2(0, 9)
+
+[node name="RayCastFloorRight" type="RayCast2D" parent="." unique_id=1069892894]
+position = Vector2(17, 28)
+target_position = Vector2(0, 9)
 
 [connection signal="block_hit" from="Hurtboxes/HurtboxTop" to="." method="_on_hurtbox_top_block_hit"]
 [connection signal="damage_info" from="Hurtboxes/HurtboxTop" to="." method="_on_hurtbox_damage_info"]
@@ -713,6 +723,7 @@ one_shot = true
 [connection signal="toggle_blocking" from="StateMachine/EnemyAttacking" to="." method="_on_enemy_attacking_toggle_blocking"]
 [connection signal="toggle_blocking" from="StateMachine/EnemyGoAway" to="." method="_on_enemy_go_away_toggle_blocking"]
 [connection signal="hurt_finished" from="StateMachine/EnemyHurt" to="StateMachine" method="_on_enemy_hurt_hurt_finished"]
+[connection signal="toggle_blocking" from="StateMachine/EnemyHurt" to="." method="_on_enemy_hurt_toggle_blocking"]
 [connection signal="take_collision_away" from="StateMachine/EnemyDying" to="." method="_on_enemy_dying_take_collision_away"]
 [connection signal="timeout" from="StateMachine/EnemyDying/Timer" to="StateMachine/EnemyDying" method="_on_timer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/EnemyAttacking" method="_on_animation_player_animation_finished"]

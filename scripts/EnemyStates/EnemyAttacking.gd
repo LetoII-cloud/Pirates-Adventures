@@ -7,13 +7,13 @@ var delayed_chase_time_left := 0.0
 
 
 func enter() -> void:
-	#super()
+	super()
 	delayed_chase_time_left = 0.0
 
 	if enemy.is_blocking:
 		toggle_blocking.emit(false, '')
 	
-	enemy.animationPlayer.play("attack_newtest")
+	attack()
 		
 	enemy.animationPlayer.seek(0.0, true)
 	enemy.times_attacked += 1
@@ -36,11 +36,12 @@ func handle_update () -> void:
 			enemy.animatedSprite.play("middle_block_hit")
 
 		if delayed_chase_time_left <= 0.0:
-			print("DELAYED CHASING")
 			finished.emit(CHASING)
 
 	return
 
+func attack () -> void:
+	enemy.animationPlayer.play("attack_newtest")
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name != "attack_newtest":
@@ -49,10 +50,8 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	var rng := RandomNumberGenerator.new()
 	var chance_for_chasing := rng.randf_range(0, 1)
 	if chance_for_chasing < 0.3:
-		print("CHASING")
-		finished.emit(CHASING)
+		attack()
 	elif chance_for_chasing >= 0.3 and chance_for_chasing < 0.6:
-		print("BLOCKING THEN CHASING")
 		enemy.disable_attack_collision()
 		enemy.velocity.x = 0.0
 		toggle_blocking.emit(true, "middle")

@@ -17,7 +17,7 @@ func handle_input () -> void:
 	
 func handle_physics (delta : float) -> void:
 	
-	if (enemy.is_on_wall()):
+	if (enemy.is_on_wall() || enemy.is_on_edge()):
 		direction *= -1
 		
 	handle_movement(direction, enemy.SPEED)

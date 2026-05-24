@@ -9,6 +9,9 @@ const BLOCK_HIT_ATTACK_RECOVERY_TIME := 0.6
 @onready var raycastTacticsLeft = $RayCastTacticsLeft
 @onready var raycastTacticsRight = $RayCastTacticsRight
 
+@onready var rayCastFloorLeft = $RayCastFloorLeft
+@onready var rayCastFloorRight = $RayCastFloorRight
+
 @onready var animatedSprite = $AnimatedSprite2D
 @onready var animationPlayer = $AnimationPlayer	
 @onready var stateMachine = $StateMachine
@@ -23,16 +26,19 @@ const BLOCK_HIT_ATTACK_RECOVERY_TIME := 0.6
 
 
 var times_attacked := 0
+var times_hurt := 0
+var seconds_since_hurt := 0.0
 var protected_zone : String = "middle"
 
 var is_blocking : bool = false:
 	set (value):
 		is_blocking = value
-		if (is_blocking):
+		if is_blocking:
 			block_timer.start()
 		
 var is_blocking_hit := false
 var attack_recovery_time := 0.0
+var attack_checker := false
 
 @onready var block_timer := $BlockTimer
 
@@ -55,8 +61,22 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	
+	if times_hurt > 0:
+		seconds_since_hurt += delta
+		
+	if seconds_since_hurt > 1:
+		print('resetting')
+		seconds_since_hurt = 0
+		times_hurt = 0
+		
 	if attack_recovery_time > 0.0:
 		attack_recovery_time = maxf(attack_recovery_time - delta, 0.0)
+		
+	if attack_checker:
+		stateMachine.change_state(EnemyState.ATTACKING)
+		### TO-DO : naprawic ze mozna go zajsc od tylu jak blokuje
+		### TO-DO : tu moze byc grubo, bo zapomnialem o tym, ze to kontroluje ataki. Ale jak bardzo?
 	return
 
 
@@ -72,6 +92,9 @@ func disable_attack_collision() -> void:
 	$AnimatedSprite2D/AttackArea/AttackCollision.set_deferred("disabled", true)
 	
 
+func check_can_attack_in_next_frame ():
+	attack_checker = true
+
 func set_facing (direction: int) -> void:
 	if direction < 0:
 		animatedSprite.scale.x = -1
@@ -80,16 +103,23 @@ func set_facing (direction: int) -> void:
 
 
 func take_damage (dmg: float) -> void:
-	var enemyHealth = enemyStatistics.take_damage(dmg)
-	hurt_sfx.play()
 
+	
+	var should_lock_transitions = false
 	if stateMachine.currentState.name != EnemyState.ENEMYHURT and enemyStatistics.health > 0:
-			stateMachine.change_state(EnemyState.ENEMYHURT)
-			stateMachine.lock_transistions = true
-			
+		times_hurt += 1 # uwaga : jesli to nie bylo powyzej tego ifa, to mogl byc scenariusz, ze time_hurt wzrosnie, a damage nie zostanie pobrany, gdy juz jest w ENEMYHURT
+		var enemyHealth = enemyStatistics.take_damage(dmg)
+		stateMachine.change_state(EnemyState.ENEMYHURT)
+		should_lock_transitions = true
+					
 	if enemyStatistics.health <= 0:
 		stateMachine.change_state(EnemyState.ENEMYDYING)
+		should_lock_transitions = true
 		
+	if should_lock_transitions:
+		stateMachine.lock_transitions = true
+		
+	hurt_sfx.play()
 	return
 
 func _on_hurtbox_damage_info(dmg: int, zone: String = "middle") -> void:
@@ -111,22 +141,39 @@ func handle_block_hit() -> void:
 
 	is_blocking_hit = true
 	start_attack_recovery(BLOCK_HIT_ATTACK_RECOVERY_TIME)
-	animationPlayer.set_deferred("stop", null)
+	#animationPlayer.set_deferred("stop", null)
+	animatedSprite.play("middle_block_hit")
 	disable_attack_collision()
 	
 	var rng := RandomNumberGenerator.new()
 	var sound_number = rng.randi_range(0, audio_sfx.size() - 1)
 	audio_sfx [sound_number].play()
 	
-	is_blocking = false
-	protected_zone = ''
-	block_timer.stop()
-	
-	print("BLOCK HIT -> GOAWAY")
-	#stateMachine.change_state(EnemyState.GOAWAY)
+	var broken_block = rng.randf_range(0.0, 1.0)
+	if broken_block <= 0.5: # this could be parametrized by enemyStatistics or smth
+		is_blocking = false
+		protected_zone = ''
+		block_timer.stop()
+		
+	handle_risk()
+
+
 	
 	return
 	
+func handle_risk():
+	if enemyStatistics.health > 50 and is_blocking:
+		stateMachine.call_deferred('change_state', (EnemyState.CHASING))
+		print("chasing!")
+	elif enemyStatistics.health > 50 and !is_blocking:
+		if can_attack():
+			stateMachine.call_deferred('change_state', (EnemyState.ATTACKING))
+			print('attacking!')
+			check_can_attack_in_next_frame()
+	elif enemyStatistics.health <= 50 and !is_blocking:
+		stateMachine.call_deferred('change_state',  (EnemyState.GOAWAY))
+		print('goaway!')
+		
 
 func _on_hurtbox_top_block_hit() -> void:
 	handle_block_hit()
@@ -140,12 +187,22 @@ func _on_hurtbox_down_block_hit() -> void:
 
 
 func _on_block_timer_timeout() -> void:
-	print("BLOCK TIMER finished")
 	is_blocking = false
 	protected_zone = ''
+	print ('block timer sss')
 	#stateMachine.change_state(EnemyState.GOAWAY)
 	#naprawic niewidzialne ataki po bloku
 
 
 func _on_enemy_go_away_toggle_blocking(block_active: bool, zone: String) -> void:
 	handle_blocking(block_active, zone)
+
+
+func _on_enemy_hurt_toggle_blocking(block_active: bool, zone: String) -> void:
+	print ('is blocking now')
+	handle_blocking(block_active, zone)
+	
+#func toggle_hurt_cooldown (hurt_cooldown_on : bool):
+	
+func is_on_edge ():
+	return !rayCastFloorLeft.is_colliding() || !rayCastFloorRight.is_colliding()

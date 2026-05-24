@@ -31,6 +31,16 @@ func is_raycast_colliding_with_player (raycastLeft : RayCast2D, raycastRight : R
 	var collidingObjIsPlayer = collidingRaycast and collidingRaycast.get_collider() is Player
 
 	return collidingObjIsPlayer
+	
+func is_back_raycast_colliding_with_player (raycastLeft : RayCast2D, raycastRight : RayCast2D, direction : int) -> bool:
+	if raycastLeft.is_colliding() and direction > 0:
+		if raycastLeft.get_collider() is Player:
+			return true
+	elif raycastRight.is_colliding() and direction < 0:
+		if raycastRight.get_collider() is Player:
+			return true
+	
+	return false
 
 func handle_movement (direction: int, currentSpeed: float) -> void:
 	handle_movement_with_direction_flag(direction, currentSpeed, true)
