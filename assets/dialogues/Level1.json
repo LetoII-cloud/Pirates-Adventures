@@ -1,0 +1,28 @@
+{
+	"dialogues" : {
+		"unknown_pirate_intro" : [
+		{
+				"speaker" : "Unknown Pirate",
+				"lines" : [
+					"Hey, you!!",
+					"I'll kill you!!!"
+				]
+		},
+		{
+				"speaker" : "Player",
+				"lines" : [
+					"Try me!",
+					"Wanna try?!",
+					"Come and get me!"
+				]
+		}],
+		"worried_player_intro" : [
+		{
+			"speaker" : "Player",
+			"lines" : [
+				"Hmm...",
+				"Doesn't look good."
+			]
+		}]
+	}
+}	

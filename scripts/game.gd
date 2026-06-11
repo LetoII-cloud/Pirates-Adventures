@@ -4,7 +4,6 @@ extends Node2D
 @onready var ammo_label = $InfoUI/AmmoLabel
 @onready var rum_label = $InfoUI/RumLabel
 @onready var player = $Player
-@onready var level_manager = $LevelManager
 
 var health_label_template : String = "Health: <health>"
 var ammo_label_template : String = "Ammo: <ammo>"
@@ -42,4 +41,3 @@ func _on_player_notify_ui(which_label : String, new_amount: int) -> void:
 		
 func prepare_projectile_spawner ():
 	player.equipment.standard_gun.spawn_projectile.connect($ProjectileSpawner.spawn)
-	

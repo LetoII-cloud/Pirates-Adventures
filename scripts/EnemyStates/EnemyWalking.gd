@@ -2,6 +2,8 @@ extends EnemyState
 
 var direction := -1
 
+var already_spotted_player := false
+
 func enter() -> void:
 	enemy.animatedSprite.play("walking")
 	return
@@ -22,8 +24,20 @@ func handle_physics (delta : float) -> void:
 	
 	if not enemy.is_on_floor():
 		finished.emit(FALLING)
+		
+	if is_raycast_colliding_with_player(enemy.sightRayCastLeft, enemy.sightRayCastRight, direction):
+		handle_spotted_player()
 
 	return
+	
+func handle_spotted_player () -> void:
+	if !already_spotted_player:
+		already_spotted_player = true
+		dialogue_requested.emit()
+		finished.emit(CHASING)
+	return
+	
+signal dialogue_requested ()
 
 func handle_update () -> void:
 	
