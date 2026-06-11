@@ -53,7 +53,6 @@ func handle_update () -> void:
 	var rng := RandomNumberGenerator.new()
 	var chance_for_blocking := rng.randf_range(0, 1)
 	if chance_for_blocking < 0.7:
-		print('blocking by away')
 		toggle_blocking.emit(true, "middle")
 	return
 	

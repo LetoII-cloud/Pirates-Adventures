@@ -3,9 +3,11 @@ class_name Dying extends PlayerState
 @onready var timer = $Timer
 
 func enter () -> void:
+	player.animationPlayer.pause()
+	player.basic_attack_collision.set_deferred("disabled", true)
 	player.animatedSprite.play("dying")
 	print("You died!")
-	player.get_node("CollisionShape2D").queue_free()
+	player.get_node("CollisionShape2D").call_deferred("queue_free")
 	
 	# the line below causes error later when the character is still technically 
 	# falling to the abyss and the "play animation falling" is called

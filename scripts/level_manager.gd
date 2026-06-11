@@ -11,12 +11,10 @@ var current_level : Level
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	switch_level(current_level_name) # jak tu zrobic dynamicznie
-	pass
+	switch_level(current_level_name)
 
 func switch_level (level_name : String) -> void:
 	current_level_name = level_name
-	print ('switching lvl')
 	if current_level != null:
 		remove_current_level()
 	var target_level_name = current_level_name if (current_level_name != null and current_level_name != '') else "Level1"

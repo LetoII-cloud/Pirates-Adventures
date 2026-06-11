@@ -1,7 +1,10 @@
 class_name Enemy extends CharacterBody2D
 
 const SPEED = 50
+const ATTACK_RECOVERY_TIME := 0.6
 const BLOCK_HIT_ATTACK_RECOVERY_TIME := 0.6
+const HURT_COUNTER_ATTACK_WINDOW := 2.0
+const HURT_COUNTER_ATTACK_HIT_THRESHOLD := 2
 
 @onready var raycastLeft = $RayCastLeft
 @onready var raycastRight = $RayCastRight
@@ -17,13 +20,10 @@ const BLOCK_HIT_ATTACK_RECOVERY_TIME := 0.6
 @onready var stateMachine = $StateMachine
 
 @onready var enemyStatistics = $EnemyStatistics
-@onready var hurtbox_collisions := {
-	"top": $Hurtboxes/HurtboxTop/CollisionShape2D,
-	"middle": $Hurtboxes/HurtboxMiddle/CollisionShape2D,
-	"down": $Hurtboxes/HurtboxDown/CollisionShape2D,
-}
+
 @onready var hurt_sfx = $HurtSFX
 
+@export var enemy_name : String
 
 var times_attacked := 0
 var times_hurt := 0
@@ -35,6 +35,8 @@ var is_blocking : bool = false:
 		is_blocking = value
 		if is_blocking:
 			block_timer.start()
+		else:
+			block_timer.stop()
 		
 var is_blocking_hit := false
 var attack_recovery_time := 0.0
@@ -65,10 +67,8 @@ func _process(delta: float) -> void:
 	if times_hurt > 0:
 		seconds_since_hurt += delta
 		
-	if seconds_since_hurt > 1:
-		print('resetting')
-		seconds_since_hurt = 0
-		times_hurt = 0
+	if seconds_since_hurt > HURT_COUNTER_ATTACK_WINDOW:
+		reset_recent_hurt_count()
 		
 	if attack_recovery_time > 0.0:
 		attack_recovery_time = maxf(attack_recovery_time - delta, 0.0)
@@ -87,6 +87,14 @@ func can_attack() -> bool:
 func start_attack_recovery(duration: float) -> void:
 	attack_recovery_time = maxf(attack_recovery_time, duration)
 
+func should_counter_attack_after_hurt() -> bool:
+	return seconds_since_hurt < HURT_COUNTER_ATTACK_WINDOW and times_hurt >= HURT_COUNTER_ATTACK_HIT_THRESHOLD and can_attack()
+
+
+func reset_recent_hurt_count() -> void:
+	seconds_since_hurt = 0.0
+	times_hurt = 0
+
 
 func disable_attack_collision() -> void:
 	$AnimatedSprite2D/AttackArea/AttackCollision.set_deferred("disabled", true)
@@ -103,19 +111,22 @@ func set_facing (direction: int) -> void:
 
 
 func take_damage (dmg: float) -> void:
-
-	
-	var should_lock_transitions = false
-	if stateMachine.currentState.name != EnemyState.ENEMYHURT and enemyStatistics.health > 0:
-		times_hurt += 1 # uwaga : jesli to nie bylo powyzej tego ifa, to mogl byc scenariusz, ze time_hurt wzrosnie, a damage nie zostanie pobrany, gdy juz jest w ENEMYHURT
-		var enemyHealth = enemyStatistics.take_damage(dmg)
-		stateMachine.change_state(EnemyState.ENEMYHURT)
-		should_lock_transitions = true
-					
 	if enemyStatistics.health <= 0:
+		return
+
+	var was_hurt_state: bool = stateMachine.currentState.name == EnemyState.ENEMYHURT
+	var enemyHealth = enemyStatistics.take_damage(dmg)
+	times_hurt += 1
+
+	var should_lock_transitions = false
+	if enemyHealth <= 0:
+		stateMachine.lock_transitions = false
 		stateMachine.change_state(EnemyState.ENEMYDYING)
 		should_lock_transitions = true
-		
+	elif !was_hurt_state:
+		stateMachine.change_state(EnemyState.ENEMYHURT)
+		should_lock_transitions = true
+
 	if should_lock_transitions:
 		stateMachine.lock_transitions = true
 		
@@ -151,9 +162,7 @@ func handle_block_hit() -> void:
 	
 	var broken_block = rng.randf_range(0.0, 1.0)
 	if broken_block <= 0.5: # this could be parametrized by enemyStatistics or smth
-		is_blocking = false
-		protected_zone = ''
-		block_timer.stop()
+		handle_blocking(false, '')
 		
 	handle_risk()
 
@@ -187,8 +196,7 @@ func _on_hurtbox_down_block_hit() -> void:
 
 
 func _on_block_timer_timeout() -> void:
-	is_blocking = false
-	protected_zone = ''
+	handle_blocking(false, '')
 	print ('block timer sss')
 	#stateMachine.change_state(EnemyState.GOAWAY)
 	#naprawic niewidzialne ataki po bloku
@@ -199,7 +207,6 @@ func _on_enemy_go_away_toggle_blocking(block_active: bool, zone: String) -> void
 
 
 func _on_enemy_hurt_toggle_blocking(block_active: bool, zone: String) -> void:
-	print ('is blocking now')
 	handle_blocking(block_active, zone)
 	
 #func toggle_hurt_cooldown (hurt_cooldown_on : bool):

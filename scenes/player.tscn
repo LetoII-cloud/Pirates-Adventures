@@ -23,8 +23,19 @@
 [ext_resource type="Texture2D" uid="uid://kkpxkqh14n7x" path="res://assets/sprites/archiwum/ZIPs/zbior/player death south spritesheet.png" id="16_60mlk"]
 [ext_resource type="Script" uid="uid://byjdxbm8xq13h" path="res://scripts/player_hurtbox.gd" id="16_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://bne7755aap1br" path="res://assets/sprites/archiwum/ZIPs/zbior/player hit spritesheeet.png" id="17_4r5pv"]
+[ext_resource type="Texture2D" uid="uid://b8ey01e8eq7v5" path="res://assets/sprites/archiwum/ZIPs/zbior/block spritesheet.png" id="18_md1ol"]
+[ext_resource type="Texture2D" uid="uid://cfxvvhrx5qn70" path="res://assets/sprites/archiwum/ZIPs/zbior/block_top.png" id="19_bj30b"]
+[ext_resource type="Texture2D" uid="uid://c55ruxnkcspyw" path="res://assets/sprites/archiwum/ZIPs/zbior/block_bottom.png" id="19_jc3p3"]
 [ext_resource type="AudioStream" uid="uid://58vkk5syuo8q" path="res://assets/sounds/hit3.mp3" id="21_i4ail"]
 [ext_resource type="Texture2D" uid="uid://dpe2p7g31v35i" path="res://assets/sprites/projectiles/bullet.png" id="24_l71n6"]
+[ext_resource type="AudioStream" uid="uid://xtal8v7xvqby" path="res://assets/sounds/sword effects/clashes/clash 1.mp3" id="25_3vyb7"]
+[ext_resource type="AudioStream" uid="uid://b6m7oeq1m36fs" path="res://assets/sounds/sword effects/clashes/clash 2.mp3" id="26_oprun"]
+[ext_resource type="AudioStream" uid="uid://iny7a5iuiar0" path="res://assets/sounds/sword effects/clashes/clash 3.mp3" id="27_i4ail"]
+[ext_resource type="AudioStream" uid="uid://d3d4ix5245kd2" path="res://assets/sounds/sword effects/clashes/clash 4.mp3" id="28_2a5lu"]
+[ext_resource type="AudioStream" uid="uid://fpyj32ggowx0" path="res://assets/sounds/sword effects/clashes/clash 5.mp3" id="29_ycw7b"]
+[ext_resource type="AudioStream" uid="uid://nr4w8ym3elcl" path="res://assets/sounds/sword effects/clashes/clash 6.mp3" id="30_dqkch"]
+[ext_resource type="AudioStream" uid="uid://ognrkv24p68i" path="res://assets/sounds/sword effects/clashes/clash 7.mp3" id="31_smehm"]
+[ext_resource type="AudioStream" uid="uid://b7ld5em4vvgif" path="res://assets/sounds/sword effects/clashes/clash 8.mp3" id="32_qhqgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i4ail"]
 atlas = ExtResource("2_smehm")
@@ -41,6 +52,30 @@ region = Rect2(68, 0, 68, 68)
 [sub_resource type="AtlasTexture" id="AtlasTexture_qfm1y"]
 atlas = ExtResource("1_dqkch")
 region = Rect2(136, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bj30b"]
+atlas = ExtResource("18_md1ol")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jc3p3"]
+atlas = ExtResource("18_md1ol")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2b1d"]
+atlas = ExtResource("19_jc3p3")
+region = Rect2(0, 0, 72, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cs1tg"]
+atlas = ExtResource("19_jc3p3")
+region = Rect2(72, 0, 72, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hax0n"]
+atlas = ExtResource("19_bj30b")
+region = Rect2(0, 0, 72, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4otl"]
+atlas = ExtResource("19_bj30b")
+region = Rect2(72, 0, 72, 68)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pf23h"]
 atlas = ExtResource("16_60mlk")
@@ -183,6 +218,39 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_new",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bj30b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jc3p3")
+}],
+"loop": false,
+"name": &"block",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2b1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cs1tg")
+}],
+"loop": false,
+"name": &"block_bottom",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hax0n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4otl")
+}],
+"loop": false,
+"name": &"block_top",
 "speed": 5.0
 }, {
 "frames": [{
@@ -427,7 +495,7 @@ metadata/_custom_type_script = "uid://cu0dybpacktyb"
 z_index = 1
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_smehm")
-animation = &"hit"
+animation = &"block_bottom"
 
 [node name="BasicAttackArea" type="Area2D" parent="PlayerSprite" unique_id=1671878146]
 
@@ -453,6 +521,32 @@ libraries/ = SubResource("AnimationLibrary_l71n6")
 [node name="HurtSFX" type="AudioStreamPlayer2D" parent="." unique_id=893919248]
 stream = ExtResource("21_i4ail")
 
+[node name="BlockingClashSFX" type="Node" parent="." unique_id=1197491142]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=1793404921]
+stream = ExtResource("25_3vyb7")
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=1681359221]
+stream = ExtResource("26_oprun")
+
+[node name="AudioStreamPlayer2D3" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=937957289]
+stream = ExtResource("27_i4ail")
+
+[node name="AudioStreamPlayer2D4" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=1391675696]
+stream = ExtResource("28_2a5lu")
+
+[node name="AudioStreamPlayer2D5" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=471183541]
+stream = ExtResource("29_ycw7b")
+
+[node name="AudioStreamPlayer2D6" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=1866134834]
+stream = ExtResource("30_dqkch")
+
+[node name="AudioStreamPlayer2D7" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=1589850957]
+stream = ExtResource("31_smehm")
+
+[node name="AudioStreamPlayer2D8" type="AudioStreamPlayer2D" parent="BlockingClashSFX" unique_id=265110241]
+stream = ExtResource("32_qhqgy")
+
 [node name="Aiming" type="Node2D" parent="." unique_id=1230618365]
 script = ExtResource("11_4ni07")
 
@@ -469,5 +563,8 @@ texture = ExtResource("24_l71n6")
 [connection signal="ammo_amount_change" from="Equipment" to="." method="_on_equipment_ammo_amount_change"]
 [connection signal="rum_amount_change" from="Equipment" to="." method="_on_equipment_rum_amount_change"]
 [connection signal="animation_finished" from="PlayerSprite" to="StateMachine/Attacking" method="_on_player_sprite_animation_finished"]
+[connection signal="animation_finished" from="PlayerSprite" to="StateMachine/Hurt" method="_on_player_sprite_animation_finished"]
 [connection signal="area_entered" from="PlayerSprite/BasicAttackArea" to="StateMachine/Attacking" method="_on_basic_attack_area_area_entered"]
+[connection signal="block_hit" from="Hurtbox" to="." method="_on_hurtbox_block_hit"]
 [connection signal="damage_info" from="Hurtbox" to="." method="_on_hurtbox_damage_info"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Attacking" method="_on_animation_player_animation_finished"]

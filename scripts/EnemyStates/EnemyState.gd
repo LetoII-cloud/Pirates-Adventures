@@ -29,7 +29,6 @@ func is_raycast_colliding_with_player (raycastLeft : RayCast2D, raycastRight : R
 		collidingRaycast = raycastRight
 		
 	var collidingObjIsPlayer = collidingRaycast and collidingRaycast.get_collider() is Player
-
 	return collidingObjIsPlayer
 	
 func is_back_raycast_colliding_with_player (raycastLeft : RayCast2D, raycastRight : RayCast2D, direction : int) -> bool:

@@ -5,7 +5,6 @@ func enter() -> void:
 		return
 		
 	player.velocity.x = 0
-	player.animatedSprite.play("idle")
 	return
 
 func handle_input () -> void:
@@ -28,5 +27,13 @@ func handle_physics (delta : float) -> void:
 	
 
 func handle_update () -> void:
+	if player.protected_zone == "middle":
+		player.play_animation("block")
+	elif player.protected_zone == "top":
+		player.play_animation("block_top")
+	elif player.protected_zone == "bottom":
+		player.play_animation("block_bottom")
+	else:
+		player.play_animation("idle")
 
 	return

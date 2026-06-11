@@ -18,3 +18,8 @@ func handle_input () -> void:
 func handle_update () -> void:
 	
 	return
+
+
+func _on_player_sprite_animation_finished() -> void:
+	if player.animatedSprite.animation == "hit":
+		finished.emit(IDLE)

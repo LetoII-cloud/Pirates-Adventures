@@ -13,12 +13,23 @@ class_name Player extends CharacterBody2D
 @onready var aiming = $Aiming
 @onready var basic_attack_area := $PlayerSprite/BasicAttackArea
 @onready var basic_attack_collision := $PlayerSprite/BasicAttackArea/BasicAttackCollision
+@onready var block_clash_sfx := [
+	$BlockingClashSFX/AudioStreamPlayer2D,
+	$BlockingClashSFX/AudioStreamPlayer2D2,
+	$BlockingClashSFX/AudioStreamPlayer2D3,
+	$BlockingClashSFX/AudioStreamPlayer2D4,
+	$BlockingClashSFX/AudioStreamPlayer2D5,
+	$BlockingClashSFX/AudioStreamPlayer2D6,
+	$BlockingClashSFX/AudioStreamPlayer2D7,
+	$BlockingClashSFX/AudioStreamPlayer2D8
+]
 
 var is_alive : bool = true
 
 var direction : int
 var sword
 var attack_zone: String = "middle"
+var protected_zone : String
 
 func _ready() -> void:
 	sword = Equipment.StandardSword.new()
@@ -34,6 +45,25 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	
 	return
+
+
+func _process(_delta: float) -> void:
+	if !is_alive:
+		return
+	if Input.is_action_pressed("block_top"):
+		protected_zone = "top"
+	elif Input.is_action_pressed("block_bottom"):
+		protected_zone = "bottom"
+	elif Input.is_action_pressed("block"):
+		protected_zone = "middle" 
+	else:
+		protected_zone = ""
+	
+
+
+func play_animation(animation_name: StringName) -> void:
+	if animatedSprite.animation != animation_name:
+		animatedSprite.play(animation_name)
 
 
 func set_facing (direction: int) -> void:
@@ -70,6 +100,12 @@ func set_attack_zone() -> void:
 
 func _on_hurtbox_damage_info(dmg: int) -> void:
 	take_damage (dmg)
+
+
+func _on_hurtbox_block_hit() -> void:
+	var rng := RandomNumberGenerator.new()
+	var sound_number = rng.randi_range(0, block_clash_sfx.size() - 1)
+	block_clash_sfx[sound_number].play()
 
 func take_damage (dmg: float) -> void:
 	var health = playerStatistics.take_damage(dmg)

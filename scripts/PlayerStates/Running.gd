@@ -26,6 +26,8 @@ func handle_physics (delta : float) -> void:
 	return
 
 func handle_update () -> void:
-	
-	player.animatedSprite.play("running")
+	if player.protected_zone:
+		player.play_animation("block")
+	else:
+		player.play_animation("running")
 	return

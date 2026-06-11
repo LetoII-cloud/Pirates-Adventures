@@ -10,6 +10,10 @@ func enter() -> void:
 	swing_sfx.play()
 	return
 
+
+func exit() -> void:
+	is_attacking = false
+
 func handle_input () -> void:
 		
 	return
@@ -40,4 +44,14 @@ func _on_basic_attack_area_area_entered(area: Area2D) -> void:
 
 
 func _on_player_sprite_animation_finished() -> void:
-	finished.emit(IDLE)
+	finish_attack()
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "attacktest":
+		finish_attack()
+
+
+func finish_attack() -> void:
+	if is_attacking:
+		finished.emit(IDLE)
